@@ -18,7 +18,8 @@
 //---- Trying with Security Part for Generating the Token
 //---- create a package for "Configuration"
 //-------->  AuthenticationUserDetails are (the User Id credentials and password encoder details are added the(the core details of a user are added))
-//-------->  token generation--------
+//######--------  token generation on process --------
+//###### -------   add the data use @PostMapping and check in the workbench ----------
 //----Not Yet started
 //---- Register API Part
 //---- Login and Logout Process
