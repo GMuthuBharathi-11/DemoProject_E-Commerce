@@ -7,13 +7,15 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table(name="user_table")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class User_Table
+public class User
 {
 
     //Setting Parameters for the User_Table
@@ -31,4 +33,7 @@ public class User_Table
     private boolean Is_Locked;
     private Integer Invalid_Attempt_Count;
     private Date  Password_Update_Date;
+
+    public void setRole(List<Role> roleList) {
+    }
 }

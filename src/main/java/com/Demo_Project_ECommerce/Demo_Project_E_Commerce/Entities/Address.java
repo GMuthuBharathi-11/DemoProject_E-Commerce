@@ -23,6 +23,14 @@ public class Address
     private String Address_Line;
     private Long Zip_Code;
     private String Label;
-    private Long User_Id;                                   // foreign key
+     private Long User_Id;                                     // foreign key
+
+    @ManyToOne
+    @JoinColumn(name = "customer_user_id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "user_table_id")
+    private User user;
 
 }

@@ -5,9 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="customer")
@@ -23,4 +23,11 @@ public class Customer
     @Id
     private long User_Id;              //Foreign Key taking reference from (User_Role)
     private String Contact_no;
+
+    @OneToMany(targetEntity = Address.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY )
+    private Set<Address> addressSet;
+
+
+
+
 }
