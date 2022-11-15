@@ -15,7 +15,7 @@ public class Customer_Controller<CustomerDetails>
     @PostMapping("/customer")
     public void createCustomer(@RequestBody CustomerDetails customer){
         System.out.println(customer.toString());
-        customerService.createCustomer(customer);
+
     }
 }
 
