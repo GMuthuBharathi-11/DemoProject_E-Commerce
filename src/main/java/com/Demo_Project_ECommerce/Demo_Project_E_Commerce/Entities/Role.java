@@ -19,4 +19,9 @@ public class Role
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;             // primary key
     private String Authority;    // Authority will decide  whether it's an Admin,Seller or a Customer
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "AUTHORITY",unique = true)
+        private E_Role roleName;
 }
+

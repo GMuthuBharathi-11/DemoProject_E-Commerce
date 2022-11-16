@@ -4,5 +4,6 @@ import java.util.Map;
 
 public interface Role_Repository {
     static Map<Object, Object> findById(long l) {
+        return null;
     }
 }

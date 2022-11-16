@@ -13,6 +13,8 @@ public class User_Role
     @Id
     private Long User_Id;                        //foreign key taking reference from user_table
     private Long Role_Id;                       //foreign key taking reference from role
-
+    public enum ERole {
+        ROLE_ADMIN,ROLE_CUSTOMER,ROLE_SELLER;
+    }
 
 }
