@@ -4,11 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+@SuperBuilder
 @Entity
 @Table(name="seller")
 @Getter
@@ -21,7 +21,11 @@ public class Seller
 
     @Id
     private Long User_Id;             // foreign key for (Seller_Table)
-    private  String Gst;
-    private long Company_Contact;
+    private  String Gst_No;
+    private String Company_Contact;
     private String Company_Name;
+
+    @OneToOne(targetEntity = User.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = " User_Id",referencedColumnName = "Id")
+    private User user;
 }

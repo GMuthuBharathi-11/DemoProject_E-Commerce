@@ -20,6 +20,5 @@
 //-------->  AuthenticationUserDetails are (the User Id credentials and password encoder details are added the(the core details of a user are added))
 //######--------  token generation on process(Done) --------
 //######-------   add the data use @PostMapping and check in the workbench ----------
-//----Not Yet started
 //---- Register API Part(Postmapping Done)
 //---- Login and Logout Process

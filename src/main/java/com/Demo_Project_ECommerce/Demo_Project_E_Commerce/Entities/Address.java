@@ -4,9 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-
+@SuperBuilder
 @Entity
 @Table(name="address")
 @Getter
@@ -20,8 +21,9 @@ public class Address
     private Long Id;
     private String City;
     private String State;
-    private String Address_Line;
-    private Long Zip_Code;
+    private String addressLine;
+    private String Country;
+    private String Zip_Code;
     private String Label;
      private Long User_Id;                                     // foreign key
 
