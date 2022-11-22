@@ -1,7 +1,6 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.Customer_Register_Request;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.RegistrationRequest;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.CustomerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.SellerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities.*;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.CustomerRepository.Customer_Repository;
@@ -14,8 +13,8 @@ import java.util.UUID;
 
 public class Registration_Service {
     private final Application_User_Service application_user_service;
-    private final Customer_Repository      customer_repository;
-    private final Role_Service             roleService;
+    private final Customer_Repository customer_repository;
+    private final Role_Service role_service;
 
     private final Seller_Repository seller_repository;
 
@@ -26,12 +25,12 @@ public class Registration_Service {
                                ) {
         this.application_user_service = application_user_service;
         this.customer_repository      = customer_repository;
-        this.roleService              = role_service;
+        this.role_service             = role_service;
         this.seller_repository        = seller_repository;
     }
 
 
-    public String registerCustomer(Customer_Register_Request customerRegisterRequest) {
+    public String registerCustomer(CustomerRegistrationRequest customerRegisterRequest) {
 
         Address address = Address.builder()
                                  .City(customerRegisterRequest.getCity())

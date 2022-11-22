@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 @Component
 public class Auth_Token_Filter extends GenericFilterBean {
-
+    @Autowired
     private final Jwt_Utils jwtUtils;
 
     @Autowired
@@ -30,17 +30,16 @@ public class Auth_Token_Filter extends GenericFilterBean {
 
 
     @Override
-    public void doFilter(
-            ServletRequest servletRequest,
-            ServletResponse servletResponse,
-            FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
 
         try {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
             String jwt = parseJwt(request);
             if (StringUtils.hasLength(jwt) && jwtUtils.validateJwtToken(jwt)) {
-                String   username = jwtUtils.getUserNameFromJwtToken(jwt);
-                UserDetails  userDetails = userDetailsService.loadUserByUsername(username);
+                String username = jwtUtils.getUserNameFromJwtToken(jwt);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -2,9 +2,8 @@ package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Controllers.CustomerC
 
 
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.Jwt_Utils;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.Customer_Register_Request;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.CustomerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.LoginRequest;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.RegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService.Registration_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,7 +27,7 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody Customer_Register_Request request) {
+    public String register(@RequestBody CustomerRegistrationRequest request) {
 
         return registrationService.registerCustomer(request);
     }

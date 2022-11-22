@@ -5,6 +5,7 @@ import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.Jwt_
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService.User_Detail_Service_Impl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,16 +19,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
  public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final Jwt_Utils  jwtUtils;
+    private final Jwt_Utils jwtUtils;
+
     private final User_Detail_Service_Impl userDetailsService;
 
-    public SecurityConfiguration(
-            Jwt_Utils jwtUtils,
-            User_Detail_Service_Impl userDetailsService) {
+    public SecurityConfiguration(Jwt_Utils jwtUtils,
+                          @Lazy User_Detail_Service_Impl userDetailsService) {
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
     }
 
+    @Bean
     public Auth_Token_Filter authenticationJwtTokenFilter() {
         return new Auth_Token_Filter(jwtUtils);
     }
@@ -48,6 +50,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
             .and()
             .authorizeRequests()
             .antMatchers("/api/user/**").permitAll()
+            .antMatchers("/customer/register").permitAll()
+            .antMatchers("/seller/register").permitAll()
+            .antMatchers("/login").permitAll()
             .anyRequest()
             .authenticated()
             .and()

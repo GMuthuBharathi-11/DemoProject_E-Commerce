@@ -1,6 +1,6 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Controllers.RegistrationController;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.Customer_Register_Request;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.CustomerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.SellerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService.Registration_Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +18,8 @@ public class Registration_controller
     }
 
     @PostMapping("/customer/register")                                   //customer
-    public String register(@RequestBody Customer_Register_Request customerRegisterRequest) {
-        return registration_service.registerCustomer(new Customer_Register_Request());
+    public String register(@RequestBody CustomerRegistrationRequest customerRegisterRequest) {
+        return registration_service.registerCustomer(new CustomerRegistrationRequest());
     }
 
     @PostMapping("/seller/register")
