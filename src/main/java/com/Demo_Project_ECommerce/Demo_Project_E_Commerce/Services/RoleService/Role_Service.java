@@ -16,10 +16,8 @@ public class Role_Service
         this.role_repository= role_repository;
     }
 
-    public  Role getOrCreateRole(E_Role e_role){
-        return role_repository.findByName(e_role)
-                              .orElseGet(()->role_repository.
-                                      save(Role.builder((e_role.build());
-
-    }
+//    public  Role getOrCreateRole(E_Role e_role){
+//        return role_repository.findByName(e_role)
+//                              .orElseGet(()->role_repository.
+//                                      save(Role.builder((e_role.build());
 }
