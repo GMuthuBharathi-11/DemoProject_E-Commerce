@@ -19,25 +19,25 @@ import java.util.List;
 import java.util.Set;
 
 @SuperBuilder
-@Entity
-@Table(name="user_table")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
+@Entity
+@Table(name="user")
 public class User
 {
 
-    //Setting Parameters for the User_Table
+    //Setting Parameters for the User
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
-    @NotNull
+   @NotNull
     @Column(name = "EMAIL", unique = true)
     private String email;
 
-    @NotNull
+//    @NotNull
     @Column(name = "FIRST_NAME")
     private String firstName;
 
@@ -94,7 +94,6 @@ public class User
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-
 
 }
 

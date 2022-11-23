@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public interface Role_Repository extends JpaRepository<Role,Integer> {
-    Optional<Role> findById(E_Role e_role);
+public interface Role_Repository extends JpaRepository<Role,Long> {
+    Optional<Role> findByRoleName(E_Role e_role);
 
 
 }

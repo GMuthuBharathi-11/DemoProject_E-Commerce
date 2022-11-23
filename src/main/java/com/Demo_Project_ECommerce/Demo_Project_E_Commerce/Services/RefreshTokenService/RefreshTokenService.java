@@ -8,13 +8,14 @@ import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.UUID;
 
-@Service
+
 @Transactional
-public class Refresh_Token_Service
+@Service
+public class RefreshTokenService
 {
     private final Refresh_Token_Repository refresh_token_repository;
 
-    public Refresh_Token_Service(Refresh_Token_Repository refresh_token_repository) {
+    public RefreshTokenService(Refresh_Token_Repository refresh_token_repository) {
         this.refresh_token_repository= refresh_token_repository;
     }
 

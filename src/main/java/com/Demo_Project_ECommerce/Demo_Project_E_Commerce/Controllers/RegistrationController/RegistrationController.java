@@ -2,24 +2,24 @@ package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Controllers.Registrat
 
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.CustomerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.SellerRegistrationRequest;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService.Registration_Service;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService.RegistrationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-public class Registration_controller
+@RestController
+public class RegistrationController
 {
-    private final Registration_Service registration_service;
+    private final RegistrationService registration_service;
 
-    private final SellerRegistrationRequest sellerRegistrationRequest;
 
-    public Registration_controller(Registration_Service registrationService, SellerRegistrationRequest sellerRegisterRequest) {
+    public RegistrationController(RegistrationService registrationService) {
         this.registration_service = registrationService;
-        this.sellerRegistrationRequest = sellerRegisterRequest;
     }
 
     @PostMapping("/customer/register")                                   //customer
     public String register(@RequestBody CustomerRegistrationRequest customerRegisterRequest) {
-        return registration_service.registerCustomer(new CustomerRegistrationRequest());
+        return registration_service.registerCustomer(customerRegisterRequest);
     }
 
     @PostMapping("/seller/register")

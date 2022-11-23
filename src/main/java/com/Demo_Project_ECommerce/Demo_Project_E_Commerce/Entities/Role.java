@@ -7,22 +7,21 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+
 @SuperBuilder
 @Entity
-@Table(name="role")
+@Table(name = "role")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class Role
-{
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;             // primary key
-    private String Authority;    // Authority will decide  whether it's an Admin,Seller or a Customer
+    private Long Id;      // Authority will decide  whether it's an Admin,Seller or a Customer
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "AUTHORITY",unique = true)
-        private E_Role roleName;
+    @Column(name = "AUTHORITY", unique = true)
+    private E_Role roleName;
 }
 

@@ -1,10 +1,10 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.OAuthService;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.Jwt_Utils;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.JwtUtils;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.AuthenticationResponse;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.LoginRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.RefreshTokenRequest;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RefreshTokenService.Refresh_Token_Service;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RefreshTokenService.RefreshTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,16 +12,17 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
-@Service
+
 @AllArgsConstructor
 @Transactional
-public class OAuth_Service
+@Service
+public class AuthService
 {
-    private Refresh_Token_Service refreshTokenService;
+    private RefreshTokenService refreshTokenService;
 
     private AuthenticationManager authenticationManager;
 
-    private Jwt_Utils jwtUtils;
+    private JwtUtils jwtUtils;
 
     public AuthenticationResponse login(LoginRequest loginRequest) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =

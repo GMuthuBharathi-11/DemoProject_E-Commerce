@@ -5,24 +5,26 @@ import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.SellerRegistration
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities.*;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.CustomerRepository.Customer_Repository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.SellerRepository.Seller_Repository;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.ApplicationUserService.Application_User_Service;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RoleService.Role_Service;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.ApplicationUserService.ApplicationUserService;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RoleService.RoleService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.UUID;
 
-public class Registration_Service {
-    private final Application_User_Service application_user_service;
+@Service
+public class RegistrationService {
+    private final ApplicationUserService application_user_service;
     private final Customer_Repository customer_repository;
-    private final Role_Service role_service;
+    private final RoleService  role_service;
 
     private final Seller_Repository seller_repository;
 
-    public Registration_Service(
-            Application_User_Service application_user_service,
+    public RegistrationService(
+            ApplicationUserService application_user_service,
             Customer_Repository customer_repository,
-            Role_Service role_service, Seller_Repository seller_repository
-                               ) {
+            RoleService role_service, Seller_Repository seller_repository
+                              ) {
         this.application_user_service = application_user_service;
         this.customer_repository      = customer_repository;
         this.role_service             = role_service;
@@ -41,7 +43,7 @@ public class Registration_Service {
                                  .Zip_Code(customerRegisterRequest.getZip_Code())
                                  .build();
 
-        //     Role role = roleService.getOrCreateRole(E_Role.ROLE_CUSTOMER);
+             Role role = role_service.getOrCreateRole(E_Role.ROLE_CUSTOMER);
 
         User user = User.builder()
                         .firstName(customerRegisterRequest.getFirst_Name())
@@ -54,7 +56,7 @@ public class Registration_Service {
                         .isLocked(Boolean.FALSE)
                         .isExpired(Boolean.FALSE)
                         .addressset(Set.of(address))
-                        //    .roles(Set.of(role))
+                        .roles(Set.of(new Role()))
                         .build();
 
         Customer customer = Customer.builder()
@@ -82,7 +84,7 @@ public class Registration_Service {
                                  .Zip_Code(sellerRegisterRequest.getZip_Code())
                                  .build();
 
-        //  Role role = roleService.getOrCreateRole(E_role.ROLE_SELLER);
+          Role role = role_service.getOrCreateRole(E_Role.ROLE_SELLER);
 
         User user = User.builder()
                         .firstName(sellerRegisterRequest.getFirst_Name())
@@ -95,7 +97,7 @@ public class Registration_Service {
                         .isLocked(Boolean.FALSE)
                         .isExpired(Boolean.FALSE)
                         .addressset(Set.of(address))
-                        //        .roles(Set.of(r))
+                        .roles(Set.of(new Role()))
                         .build();
 
         Seller seller = Seller.builder()

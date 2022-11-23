@@ -1,6 +1,6 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService.User_Detail_Service_Impl;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,18 +17,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 @Component
-public class Auth_Token_Filter extends GenericFilterBean {
+public class AuthTokenFilter extends GenericFilterBean {
     @Autowired
-    private final Jwt_Utils jwtUtils;
+    private final JwtUtils jwtUtils;
 
     @Autowired
-    private User_Detail_Service_Impl userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
-    public Auth_Token_Filter(Jwt_Utils jwtUtils) {
+    public AuthTokenFilter(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
     }
-
-
     @Override
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse,

@@ -1,6 +1,7 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Controllers.ForgotPasswordController;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.CustomerService.Customer_Service;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.Email_Sender_Service;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.CustomerService.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -8,14 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Component
-public class Forgot_Password_controller
+public class ForgotPasswordcontroller
 {
     @Autowired
-    private JavaMailSender mailSender;
+    private Email_Sender_Service mailSender;
 
     @Autowired
-    private Customer_Service customerService;
-
+    private CustomerService customerservice;
     @GetMapping("/forgot_password")
     public String showForgotPasswordForm() {
 

@@ -2,26 +2,27 @@ package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService;
 
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities.Role;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities.User;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.UserRepository.User_Repository;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.UserRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
-public class User_Detail_Service_Impl implements UserDetailsService {
+@Service
+public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
     @Autowired
-    private final User_Repository userRepository;
+    private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    public User_Detail_Service_Impl(User_Repository userRepository,PasswordEncoder passwordEncoder)
+    public UserDetailsServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder)
     {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -43,10 +44,10 @@ public class User_Detail_Service_Impl implements UserDetailsService {
 //                                                                      getAuthority(userAuthentication.getRoles()));
 //    }
 
-//    private User getUserByEmail(String Email) {
-//        return userRepository.findByEmail(Email)
-//                             .orElseThrow(() -> new UsernameNotFoundException("No user found with  this Email : " + Email));
-//    }
+    private User getUserByEmail(String Email) {
+        return userRepository.findByEmail(Email)
+                             .orElseThrow(() -> new UsernameNotFoundException("No user found with  this Email : " + Email));
+    }
 
     private Collection<? extends GrantedAuthority> getAuthority(Set<Role> roles) {
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();

@@ -7,17 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Role_Service
+public class RoleService
 {
     @Autowired
     private final Role_Repository role_repository;
 
-    public Role_Service(Role_Repository role_repository) {
+    public RoleService(Role_Repository role_repository) {
         this.role_repository= role_repository;
     }
-
-//    public  Role getOrCreateRole(E_Role e_role){
-//        return role_repository.findByName(e_role)
-//                              .orElseGet(()->role_repository.
-//                                      save(Role.builder((e_role.build());
+     public Role getOrCreateRole(E_Role e_role)
+     {
+         return role_repository
+                 .findByRoleName(e_role)
+                 .orElseGet(()-> role_repository.save(Role.builder()
+                                                              .roleName(e_role)
+                                                              .build()));
+     }
 }

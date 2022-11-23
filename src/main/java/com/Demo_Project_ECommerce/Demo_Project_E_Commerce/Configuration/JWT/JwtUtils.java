@@ -1,6 +1,6 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RefreshTokenService.Refresh_Token_Service;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RefreshTokenService.RefreshTokenService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -11,14 +11,14 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class Jwt_Utils
+public class JwtUtils
 {    @Value("${dashboard.app.jwtSecret}")
      private String jwtSecret;
 
     @Value("${dashboard.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    private Refresh_Token_Service refreshTokenService;
+    private RefreshTokenService refreshTokenService;
 
 
     public Integer getJwtMillis(){

@@ -9,12 +9,12 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 
 @Entity
-    @SuperBuilder
-    @Table(name = "admin")
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
+@SuperBuilder
+@Table(name = "admin")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Admin {
 
         @Id

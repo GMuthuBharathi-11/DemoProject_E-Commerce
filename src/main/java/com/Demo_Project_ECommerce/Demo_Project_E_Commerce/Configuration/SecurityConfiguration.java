@@ -1,8 +1,8 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.Auth_Token_Filter;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.Jwt_Utils;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService.User_Detail_Service_Impl;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.AuthTokenFilter;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.JwtUtils;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -19,19 +19,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
  public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final Jwt_Utils jwtUtils;
+    private final JwtUtils jwtUtils;
 
-    private final User_Detail_Service_Impl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    public SecurityConfiguration(Jwt_Utils jwtUtils,
-                          @Lazy User_Detail_Service_Impl userDetailsService) {
+    public SecurityConfiguration(
+            JwtUtils jwtUtils,
+            @Lazy UserDetailsServiceImpl userDetailsService) {
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
     }
 
     @Bean
-    public Auth_Token_Filter authenticationJwtTokenFilter() {
-        return new Auth_Token_Filter(jwtUtils);
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter(jwtUtils);
     }
 
     @Override

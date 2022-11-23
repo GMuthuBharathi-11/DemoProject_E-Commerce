@@ -23,7 +23,7 @@ public class Address
     private String State;
     private String addressLine;
     private String Country;
-    private Long Zip_Code;
+    private String Zip_Code;
     private String Label;
      private Long User_Id;                                     // foreign key
 

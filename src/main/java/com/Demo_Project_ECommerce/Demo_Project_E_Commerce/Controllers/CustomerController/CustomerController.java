@@ -1,10 +1,10 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Controllers.CustomerController;
 
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.Jwt_Utils;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.JwtUtils;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.CustomerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.LoginRequest;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService.Registration_Service;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/v1/registration")
 public class CustomerController {
-    private final Registration_Service registrationService;
-    private final Jwt_Utils            jwtUtils;
+    private final RegistrationService registrationService;
+    private final JwtUtils            jwtUtils;
     @Autowired
     AuthenticationManager authenticationManager;
 
-    public CustomerController(Registration_Service registrationService, Jwt_Utils jwtUtils) {
+    public CustomerController(RegistrationService registrationService, JwtUtils jwtUtils) {
         this.registrationService = registrationService;
         this.jwtUtils            = jwtUtils;
     }
@@ -40,9 +40,6 @@ public class CustomerController {
         String token = jwtUtils.generateJwtToken(loginrequest.getUsername());
         return token;
     }
-
-
-
 
 }
 
