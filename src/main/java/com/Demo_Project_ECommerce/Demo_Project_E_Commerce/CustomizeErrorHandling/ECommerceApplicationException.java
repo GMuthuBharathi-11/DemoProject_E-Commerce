@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class ApplicationException extends RuntimeException{
-    public ApplicationException(String user_not_found) {
+public class ECommerceApplicationException extends RuntimeException{
+    public ECommerceApplicationException(String user_not_found) {
         super(user_not_found);
     }
 }

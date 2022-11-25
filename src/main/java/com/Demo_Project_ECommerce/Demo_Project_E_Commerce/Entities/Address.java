@@ -8,12 +8,11 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 @SuperBuilder
-@Entity
-@Table(name="address")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@Entity
+@Table(name="address")
 public class Address
 {
    @Id

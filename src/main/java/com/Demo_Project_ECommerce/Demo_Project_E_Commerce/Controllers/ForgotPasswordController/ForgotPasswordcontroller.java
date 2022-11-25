@@ -1,45 +1,38 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Controllers.ForgotPasswordController;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.Email_Sender_Service;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.CustomerService.CustomerService;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class ForgotPasswordcontroller
 {
     @Autowired
-    private Email_Sender_Service mailSender;
+    private EmailSenderService mailSender;
 
     @Autowired
     private CustomerService customerservice;
     @GetMapping("/forgot_password")
-    public String showForgotPasswordForm() {
+    public String showForgotPasswordForm(@RequestParam("email") String email) {
+
 
         return null;
     }
 
-    @PostMapping("/forgot_password")
-    public String processForgotPassword() {
-        return null;
-    }
-
-    public void sendEmail(){
-
-    }
 
 
     @GetMapping("/reset_password")
     public String showResetPasswordForm() {
-      return   "forgot_password_form";
+      return   null;
     }
 
-    @PostMapping("/reset_password")
-    public String processResetPassword() {
-
-        return null;
-    }
 }

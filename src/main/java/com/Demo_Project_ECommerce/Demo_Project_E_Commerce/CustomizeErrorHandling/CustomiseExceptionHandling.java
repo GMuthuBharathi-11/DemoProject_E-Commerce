@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 public class CustomiseExceptionHandling extends ResponseEntityExceptionHandler
 {
-    @ExceptionHandler(ApplicationException.class)
+    @ExceptionHandler(ECommerceApplicationException.class)
     public final ResponseEntity<ErrorDetails> handleErrorException(Exception ex, WebRequest request) throws Exception {
 
         ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));

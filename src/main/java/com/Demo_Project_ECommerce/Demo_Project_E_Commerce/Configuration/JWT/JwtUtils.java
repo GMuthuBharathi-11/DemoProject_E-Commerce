@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class JwtUtils
-{    @Value("${dashboard.app.jwtSecret}")
-     private String jwtSecret;
+public class JwtUtils {
+    @Value("${dashboard.app.jwtSecret}")
+    private String jwtSecret;
 
     @Value("${dashboard.app.jwtExpirationMs}")
     private int jwtExpirationMs;
@@ -21,7 +21,7 @@ public class JwtUtils
     private RefreshTokenService refreshTokenService;
 
 
-    public Integer getJwtMillis(){
+    public Integer getJwtMillis() {
         return jwtExpirationMs;
     }
 
@@ -41,11 +41,12 @@ public class JwtUtils
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Algorithm algorithm = Algorithm.HMAC512(jwtSecret);
-            JWTVerifier verifier = JWT.require(algorithm).build(); //Reusable verifier instance
+            Algorithm   algorithm = Algorithm.HMAC512(jwtSecret);
+            JWTVerifier verifier  = JWT.require(algorithm).build(); //Reusable verifier instance
             verifier.verify(authToken);
             return true;
-        } catch (JWTVerificationException e) {
+        }
+        catch (JWTVerificationException e) {
             e.printStackTrace();
         }
 

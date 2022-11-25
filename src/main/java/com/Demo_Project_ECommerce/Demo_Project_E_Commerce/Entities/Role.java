@@ -9,12 +9,11 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 
 @SuperBuilder
-@Entity
-@Table(name = "role")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@Entity
+@Table(name = "role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

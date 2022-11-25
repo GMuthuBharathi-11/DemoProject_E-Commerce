@@ -9,12 +9,11 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 
 @SuperBuilder
-@Entity
-@Table(name="seller")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@Entity
+@Table(name="seller")
 public class Seller
 {
     //Setting Parameters for Seller

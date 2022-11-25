@@ -2,9 +2,10 @@ package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.Registration
 
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.CustomerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.SellerRegistrationRequest;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities.*;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.CustomerRepository.Customer_Repository;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.SellerRepository.Seller_Repository;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.CustomerRepository.CustomerRepository;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.SellerRepository.SellerRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.ApplicationUserService.ApplicationUserService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RoleService.RoleService;
 import org.springframework.stereotype.Service;
@@ -15,20 +16,26 @@ import java.util.UUID;
 @Service
 public class RegistrationService {
     private final ApplicationUserService application_user_service;
-    private final Customer_Repository customer_repository;
+
+    private final CustomerRepository customer_repository;
     private final RoleService  role_service;
 
-    private final Seller_Repository seller_repository;
+    private final SellerRepository seller_repository;
+
+
+    private final EmailSenderService emailSenderService;
 
     public RegistrationService(
             ApplicationUserService application_user_service,
-            Customer_Repository customer_repository,
-            RoleService role_service, Seller_Repository seller_repository
+            CustomerRepository customer_repository,
+            RoleService role_service, SellerRepository seller_repository,
+            EmailSenderService emailSenderService
                               ) {
         this.application_user_service = application_user_service;
         this.customer_repository      = customer_repository;
         this.role_service             = role_service;
         this.seller_repository        = seller_repository;
+        this.emailSenderService       = emailSenderService;
     }
 
 
@@ -61,12 +68,14 @@ public class RegistrationService {
 
         Customer customer = Customer.builder()
                                     .Contact_No(customerRegisterRequest.getContact_Number())
-                                    .User_Id(user.getId())
+                                    .id(user.getId())
                                     .build();
         customer_repository.save(customer);
 
         String token = UUID.randomUUID().toString();
-
+        emailSenderService.sendMail(customerRegisterRequest.getEmail(),
+        "Activate Your Acoount",
+        "Please activate your account");
 
         return "Success";
 
@@ -110,6 +119,9 @@ public class RegistrationService {
 
         String token = UUID.randomUUID().toString();
 
+        emailSenderService.sendMail(sellerRegisterRequest.getEmail(),
+                                           "Activate Your Acoount",
+                                           "Please activate your account");
         return "success";
 
     }

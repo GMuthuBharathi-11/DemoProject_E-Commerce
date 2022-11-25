@@ -16,9 +16,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-@Component
+
 public class AuthTokenFilter extends GenericFilterBean {
-    @Autowired
     private final JwtUtils jwtUtils;
 
     @Autowired
@@ -27,23 +26,28 @@ public class AuthTokenFilter extends GenericFilterBean {
     public AuthTokenFilter(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
     }
+
     @Override
-    public void doFilter(ServletRequest servletRequest,
-                         ServletResponse servletResponse,
-                         FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(
+            ServletRequest servletRequest,
+            ServletResponse servletResponse,
+            FilterChain filterChain
+                        ) throws IOException, ServletException {
 
         try {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
-            String jwt = parseJwt(request);
+            String  jwt  = parseJwt(request);
             if (StringUtils.hasLength(jwt) && jwtUtils.validateJwtToken(jwt)) {
-                String username = jwtUtils.getUserNameFromJwtToken(jwt);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                String  username  = jwtUtils.getUserNameFromJwtToken(jwt);
+                UserDetails  userDetails  = userDetailsService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
             filterChain.doFilter(servletRequest, servletResponse);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
