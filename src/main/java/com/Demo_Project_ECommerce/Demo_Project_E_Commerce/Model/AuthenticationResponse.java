@@ -1,4 +1,4 @@
-package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto;
+package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,28 +1,22 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService;
-
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.CustomerRegistrationRequest;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.SellerRegistrationRequest;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.CustomerRegistrationRequest;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.SellerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities.*;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.*;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.CustomerRepository.CustomerRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.SellerRepository.SellerRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.ApplicationUserService.ApplicationUserService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RoleService.RoleService;
 import org.springframework.stereotype.Service;
-
 import java.util.Set;
 import java.util.UUID;
 
 @Service
 public class RegistrationService {
     private final ApplicationUserService application_user_service;
-
     private final CustomerRepository customer_repository;
     private final RoleService  role_service;
-
     private final SellerRepository seller_repository;
-
-
     private final EmailSenderService emailSenderService;
 
     public RegistrationService(
@@ -37,8 +31,6 @@ public class RegistrationService {
         this.seller_repository        = seller_repository;
         this.emailSenderService       = emailSenderService;
     }
-
-
     public String registerCustomer(CustomerRegistrationRequest customerRegisterRequest) {
 
         Address address = Address.builder()
@@ -47,10 +39,10 @@ public class RegistrationService {
                                  .Country(customerRegisterRequest.getCountry())
                                  .addressLine(customerRegisterRequest.getAddress_Line())
                                  .Label(customerRegisterRequest.getLabel())
-                                 .Zip_Code(customerRegisterRequest.getZip_Code())
+                                 .ZipCode(customerRegisterRequest.getZip_Code())
                                  .build();
 
-             Role role = role_service.getOrCreateRole(E_Role.ROLE_CUSTOMER);
+        Role role = role_service.getOrCreateRole(E_Role.ROLE_CUSTOMER);
 
         User user = User.builder()
                         .firstName(customerRegisterRequest.getFirst_Name())
@@ -62,7 +54,7 @@ public class RegistrationService {
                         .isDeleted(Boolean.FALSE)
                         .isLocked(Boolean.FALSE)
                         .isExpired(Boolean.FALSE)
-                        .addressset(Set.of(address))
+                        .AddressSet(Set.of(address))
                         .roles(Set.of(new Role()))
                         .build();
 
@@ -73,15 +65,15 @@ public class RegistrationService {
         customer_repository.save(customer);
 
         String token = UUID.randomUUID().toString();
-        emailSenderService.sendMail(customerRegisterRequest.getEmail(),
-        "Activate Your Acoount",
-        "Please activate your account");
+        emailSenderService.sendMail(
+                customerRegisterRequest.getEmail(),
+                "Activate Your Acoount",
+                "Please activate your account"
+                                   );
 
-        return "Success";
-
+        return "Cutomer Registered Successfully"+ " Please check your email to activate your profile";
 
     }
-
     public String registerSeller(SellerRegistrationRequest sellerRegisterRequest) {
 
         Address address = Address.builder()
@@ -90,10 +82,10 @@ public class RegistrationService {
                                  .Country(sellerRegisterRequest.getCountry())
                                  .addressLine(sellerRegisterRequest.getAddress_Line())
                                  .Label(sellerRegisterRequest.getLabel())
-                                 .Zip_Code(sellerRegisterRequest.getZip_Code())
+                                 .ZipCode(sellerRegisterRequest.getZip_Code())
                                  .build();
 
-          Role role = role_service.getOrCreateRole(E_Role.ROLE_SELLER);
+        Role role = role_service.getOrCreateRole(E_Role.ROLE_SELLER);
 
         User user = User.builder()
                         .firstName(sellerRegisterRequest.getFirst_Name())
@@ -105,7 +97,7 @@ public class RegistrationService {
                         .isDeleted(Boolean.FALSE)
                         .isLocked(Boolean.FALSE)
                         .isExpired(Boolean.FALSE)
-                        .addressset(Set.of(address))
+                        .AddressSet(Set.of(address))
                         .roles(Set.of(new Role()))
                         .build();
 
@@ -119,10 +111,12 @@ public class RegistrationService {
 
         String token = UUID.randomUUID().toString();
 
-        emailSenderService.sendMail(sellerRegisterRequest.getEmail(),
-                                           "Activate Your Acoount",
-                                           "Please activate your account");
-        return "success";
+        emailSenderService.sendMail(
+                sellerRegisterRequest.getEmail(),
+                "Activate Your Account",
+                "Please activate your account"
+                                   );
+        return "Seller Registered successfully" + "Please check your email to activate your profile";
 
     }
 }

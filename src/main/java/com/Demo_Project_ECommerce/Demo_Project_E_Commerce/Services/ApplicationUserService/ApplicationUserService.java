@@ -5,11 +5,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@AllArgsConstructor
+
 @Service
-public class ApplicationUserService
-{
-    private final UserRepository  user_repository;
+public class ApplicationUserService {
+    private final UserRepository  userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    public ApplicationUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository  = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
 }

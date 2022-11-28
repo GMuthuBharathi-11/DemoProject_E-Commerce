@@ -1,9 +1,9 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Controllers.AuthController;
 
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.JwtUtils;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.AuthenticationResponse;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.LoginRequest;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.RefreshTokenRequest;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.AuthenticationResponse;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.LoginRequest;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.RefreshTokenRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.OAuthService.AuthService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RefreshTokenService.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;

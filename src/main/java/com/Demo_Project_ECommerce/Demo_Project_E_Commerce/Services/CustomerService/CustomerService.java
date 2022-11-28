@@ -1,23 +1,35 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.CustomerService;
 
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.CustomizeErrorHandling.ECommerceApplicationException;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Address;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.User;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities.Customer;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Customer;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.AddaddressDto;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.AddressUpdateDto;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.UserProfileDto;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.AddressRepository.AddressRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.CustomerRepository.CustomerRepository;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.UserRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
-
     @Autowired
     private EmailSenderService emailSenderService;
+    @Autowired
+    private UserRepository     userRepository;
+    @Autowired
+    private AddressRepository  addressRepository;
 
 
     public Customer findCustomer(Long Id) {
@@ -25,6 +37,11 @@ public class CustomerService {
                                               .orElseThrow(() -> new ECommerceApplicationException("No user found "
                                                                                                    + "with id : " + Id));
         return customer;
+    }
+
+    public List<Customer> findAllcustomer() {
+        List<Customer> result = (List<Customer>) customerRepository.findAll();
+        return result;
     }
 
     public Page<Customer> findAllCustomers() {
@@ -37,8 +54,8 @@ public class CustomerService {
         Customer customer = customerRepository.findById(Id)
                                               .orElseThrow(() -> new ECommerceApplicationException("No user found "
                                                                                                    + "with id : " + Id));
-        if (customer.getUser().getIsActive().equals(Boolean.TRUE)) {
-            customer.getUser().setIsActive(Boolean.FALSE);
+        if (customer.getUser().getIsActive().equals(Boolean.FALSE)) {
+            customer.getUser().setIsActive(Boolean.TRUE);
             customerRepository.save(customer);
 
             emailSenderService.sendMail(
@@ -75,34 +92,114 @@ public class CustomerService {
             }
             return "Customer is Deactivated";
         }
-
-
     }
 
-//    public void updateResetPassword(String token, String email) {
-//        Customer customer = customerRepository.findByEmail(email);
-//        if (customer != null) {
-//            customer.setResetPasswordToken(token);
-//            customerRepository.save(customer);
-//        }
-//        else {
-//            throw new ECommerceApplicationException("Customer Not Found" + email);
-//        }
-//    }
-//    public Customer get(String resetPasswordToken)
-//    {
-//        return customerRepository.findByResetPasswordToken(resetPasswordToken);
-//    }
-//    public void updatePassword(Customer customer, String newPassword) {
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String                encodedPassword = passwordEncoder.encode(newPassword);
-//        customer.setPassword(encodedPassword);
-//
-//        customer.setResetPasswordToken(null);
-//        customerRepository.save(customer);
-//    }
+    public Customer getCustomerProfile(String name) {
 
+        User user = userRepository.findByEmail(name)
+                                  .orElseThrow(() -> new ECommerceApplicationException("No user found"));
+
+        Customer customer = customerRepository.findByUser(user)
+                                        .orElseThrow(() -> new ECommerceApplicationException("No user found"));
+        return customer;
+    }
+
+    public Set<Address> getCustomerAddress(String email) {
+        User user = userRepository.findByEmail(email)
+                                        .orElseThrow(() -> new ECommerceApplicationException("No user found"));
+        Set<Address> addresses = user.getAddressSet();
+        return addresses;
+    }
+
+    public void UpdateMyprofile(String name, UserProfileDto userProfileDto) {
+
+        User user = userRepository.findByEmail(name)
+                                        .orElseThrow(() -> new ECommerceApplicationException("No user found"));
+
+        Customer customer = customerRepository.findByUser(user)
+                                        .orElseThrow(() -> new ECommerceApplicationException("No user found"));
+
+        if (userProfileDto.getFirstName() != null)
+            customer.getUser().setFirstName(userProfileDto.getFirstName());
+        if (userProfileDto.getMiddleName() != null)
+            customer.getUser().setMiddleName(userProfileDto.getMiddleName());
+        if (userProfileDto.getLastName() != null)
+            customer.getUser().setLastName(userProfileDto.getLastName());
+        if (userProfileDto.getEmail() != null)
+            customer.getUser().setEmail(userProfileDto.getEmail());
+        if (userProfileDto.getContactNo() != null)
+            customer.setContact_No(userProfileDto.getContactNo());
+
+        customerRepository.save(customer);
+
+    }
+    public String addAddress(String email, AddaddressDto addAddressDto){
+
+        User user = userRepository.findByEmail(email)
+                                        .orElseThrow(()->new ECommerceApplicationException("No user found"));
+
+        Customer customer = customerRepository.findByUser(user)
+                                        .orElseThrow(()->new ECommerceApplicationException("No user found"));
+
+        Address address = Address.builder()
+                                 .City(addAddressDto.getCity())
+                                 .State(addAddressDto.getState())
+                                 .Country(addAddressDto.getCountry())
+                                 .addressLine(addAddressDto.getAddressLine())
+                                 .Label(addAddressDto.getLabel())
+                                 .ZipCode(addAddressDto.getZipCode())
+                                 .build();
+
+        customer.getUser().getAddressSet().add(address);
+
+        customerRepository.save(customer);
+
+        return "Address added successfully";
+    }
+
+    public String UpdateMyAddress(long Id, String email, AddressUpdateDto addressUpdateDto){
+
+        User user=userRepository.findByEmail(email)
+                                            .orElseThrow(()->new ECommerceApplicationException("No User Found"));
+
+        Customer customer =customerRepository.findByUser(user)
+                                       .orElseThrow(()->new ECommerceApplicationException("No user Found"));
+
+        Address address=addressRepository.findById(Id)
+                                   .orElseThrow(()->new ECommerceApplicationException("No Address Found"));
+
+        if (addressUpdateDto.getCity()!=null)
+            address.setCity(addressUpdateDto.getCity());
+
+        if (addressUpdateDto.getState()!=null)
+            address.setState(addressUpdateDto.getState());
+
+        if(addressUpdateDto.getLabel()!=null)
+            address.setLabel(addressUpdateDto.getLabel());
+
+        if(addressUpdateDto.getAddressLine()!=null)
+            address.setAddressLine(addressUpdateDto.getAddressLine());
+
+        if(addressUpdateDto.getZipCode()!=null)
+            address.setZipCode(addressUpdateDto.getZipCode());
+
+        if(addressUpdateDto.getCountry()!=null)
+            address.setCountry(addressUpdateDto.getCountry());
+
+        addressRepository.save(address);
+
+        return "Address Updated Successfully";
+    }
+    public String DeleteAddress(Long Id,String email){
+
+        User userEntity=userRepository.findByEmail(email)
+                                            .orElseThrow(()->new ECommerceApplicationException("No User Found"));
+        Customer customer=customerRepository.findByUser(userEntity)
+                                      .orElseThrow(()-> new ECommerceApplicationException("No User Found"));
+        Address address= addressRepository.findById(Id)
+                                    .orElseThrow(()->new ECommerceApplicationException("No Address Found"));
+        addressRepository.delete(address);
+        return "Address Deleted Successfully";
+
+    }
 }
-
-
-

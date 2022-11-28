@@ -20,7 +20,6 @@ public class JwtUtils {
 
     private RefreshTokenService refreshTokenService;
 
-
     public Integer getJwtMillis() {
         return jwtExpirationMs;
     }

@@ -1,7 +1,7 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Controllers.RegistrationController;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.CustomerRegistrationRequest;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.SellerRegistrationRequest;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.CustomerRegistrationRequest;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.SellerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService.RegistrationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

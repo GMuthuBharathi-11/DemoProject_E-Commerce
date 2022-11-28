@@ -1,5 +1,6 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration;
 
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.AuthEntryJwt;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.AuthTokenFilter;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.JwtUtils;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService.UserDetailsServiceImpl;
@@ -17,16 +18,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
- public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtUtils jwtUtils;
+    private final AuthEntryJwt authEntryJwt;
 
     private final UserDetailsServiceImpl userDetailsService;
 
     public SecurityConfiguration(
-            JwtUtils jwtUtils,
-            @Lazy UserDetailsServiceImpl userDetailsService) {
-        this.jwtUtils = jwtUtils;
+            JwtUtils jwtUtils,AuthEntryJwt authEntryJwt,
+            @Lazy UserDetailsServiceImpl userDetailsService)
+    {
+        this.jwtUtils           = jwtUtils;
+        this.authEntryJwt = authEntryJwt;
         this.userDetailsService = userDetailsService;
     }
 
@@ -48,9 +52,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
             .csrf()
             .disable()
             .exceptionHandling()
+            .authenticationEntryPoint(authEntryJwt)
             .and()
             .authorizeRequests()
             .antMatchers("/api/user/**").permitAll()
+            .antMatchers("/api/forget/**").permitAll()
+            .antMatchers("/api/admin/**").permitAll()
+            .antMatchers("/api/seller/**").permitAll()
+            .antMatchers("/address/add").permitAll()
+            .antMatchers("api/customer/**").permitAll()
             .antMatchers("/customer/register").permitAll()
             .antMatchers("/seller/register").permitAll()
             .antMatchers("/login").permitAll()

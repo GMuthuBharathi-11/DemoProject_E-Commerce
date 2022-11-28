@@ -1,8 +1,8 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce;
 
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities.*;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.AdminRepository.Admin_Repository;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.RoleRepository.Role_Repository;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.*;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.AdminRepository.AdminRepository;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.RoleRepository.RoleRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.UserRepository.UserRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RoleService.RoleService;
 import lombok.AllArgsConstructor;
@@ -22,36 +22,29 @@ import java.util.UUID;
 public class Bootstrap implements ApplicationRunner {
 
     @Autowired
-    private Role_Repository       role_repository;
+    private  RoleRepository  roleRepository;
     @Autowired
-    private UserRepository        userRepository;
+    private  UserRepository  userRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Autowired
     private final RoleService roleService;
-
     @Autowired
-    private final Admin_Repository admin_repository;
-
+    private final AdminRepository adminRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         if (userRepository.count() < 1) {
 
             Role role = roleService.getOrCreateRole(E_Role.ROLE_ADMIN);
-
-
             Address address = Address.builder()
                                      .City("Bangalore")
                                      .State("Karnataka")
-                                     .Zip_Code(String.valueOf(110032L))
+                                     .ZipCode(String.valueOf(110032L))
                                      .Country("India")
                                      .addressLine("198 7th BSK ")
                                      .Label("Office")
                                      .build();
-
-
             User user = User.builder()
                             .firstName("Muthu")
                             .middleName(" ")
@@ -63,17 +56,14 @@ public class Bootstrap implements ApplicationRunner {
                             .isDeleted(Boolean.FALSE)
                             .isLocked(Boolean.FALSE)
                             .isActive(Boolean.FALSE)
-                            .addressset(Set.of(address))
+                            .AddressSet(Set.of(address))
                             .roles(Set.of(role))
                             .build();
-
-
             Admin admin = Admin.builder()
                                .phoneNumber("+91-9739807964")
                                .user(user)
                                .build();
-            admin_repository.save(admin);
-
+            adminRepository.save(admin);
             String token = UUID.randomUUID().toString();
 
 

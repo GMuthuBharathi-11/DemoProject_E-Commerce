@@ -1,4 +1,4 @@
-package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities;
+package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "role")
 public class Role {

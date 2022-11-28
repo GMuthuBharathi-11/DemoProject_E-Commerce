@@ -1,7 +1,5 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Controllers;
-
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Dto.PassReset;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService.UserService;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.PasswordDto;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 public class UpdateController{
     @Autowired
     UserServices userServices;
-
     @PutMapping("/UpdateToken")
     public void tokenUpdate ( @RequestParam String  email){
 
@@ -18,10 +15,9 @@ public class UpdateController{
     }
 
     @PostMapping("/resetPassword")
-    public String resetPassword(@RequestBody PassReset passReset)
+    public String resetPassword(@RequestBody PasswordDto passReset)
     {
-
-        return userServices .passwordReset(passReset);
+        return userServices.passwordReset(passReset);
     }
 
 }

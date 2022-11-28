@@ -1,7 +1,4 @@
-package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Entities;
-
-import javax.persistence.Entity;
-
+package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain;
 
 public enum E_Role
 {
