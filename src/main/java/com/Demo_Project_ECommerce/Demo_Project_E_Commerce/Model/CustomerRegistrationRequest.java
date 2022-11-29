@@ -8,6 +8,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class CustomerRegistrationRequest extends UserDetails
 {
-    private String Contact_Number;
+    private String contactNumber;
 
 }

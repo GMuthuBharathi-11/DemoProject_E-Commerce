@@ -25,15 +25,7 @@ public class Customer
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long   id;
     @NotNull//Foreign Key taking reference from User_role
-    private String Contact_No;
-//    @OneToMany(targetEntity = Address.class, cascade = CascadeType.ALL,fetch = FetchType.LAZY )
-//    private Set<Address> addressSet;
-//    public void setPassword(String encodedPassword)
-//    {
-//
-//    }
-//    @Column(name = "reset_password_token")
-//    private String resetPasswordToken;
+    private String phoneNumber;
 
     @OneToOne(cascade = CascadeType.ALL)
     private User user;

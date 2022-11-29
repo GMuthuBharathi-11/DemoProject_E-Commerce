@@ -1,6 +1,7 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.SellerService;
 
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.CustomizeErrorHandling.ECommerceApplicationException;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Customer;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.AddressUpdateDto;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Address;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SellerService {
@@ -35,11 +38,10 @@ public class SellerService {
     }
 
     public Page<Seller> findAllSellers() {
-        PageRequest pageable = PageRequest.of(0, 10, Sort.Direction.ASC, "Id");
-        Page<Seller> result = sellerRepository
-                .findAll(pageable);
+        PageRequest    pageable = PageRequest.of(0, 10, Sort.Direction.ASC, "Id");
+        Page<Seller> result   = sellerRepository.findAll(pageable);
         return result;
-    }
+           }
 
     public String SellerActivate(Long Id) {
         Seller seller = sellerRepository.findById(Id)
@@ -76,8 +78,6 @@ public class SellerService {
                         "Account Deactivated",
                         "Account has been Deactivated"
                                            );
-
-
             }
             return "Seller Deactivated";
         }
@@ -141,7 +141,7 @@ public class SellerService {
         if (userProfileDto.getEmail() != null)
             seller.getUser().setEmail(userProfileDto.getEmail());
         if (userProfileDto.getContactNo() != null)
-            seller.setCompany_Contact(userProfileDto.getContactNo());
+            seller.setCompanyContact(userProfileDto.getContactNo());
 
         sellerRepository.save(seller);
     }

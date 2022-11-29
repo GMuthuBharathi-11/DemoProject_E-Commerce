@@ -22,5 +22,5 @@ public class RefreshToken
 
         @OneToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = " User_Id",referencedColumnName = "Id")
-         private User user;
+        private User user;
 }

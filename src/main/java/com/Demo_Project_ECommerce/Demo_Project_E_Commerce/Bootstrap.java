@@ -38,12 +38,12 @@ public class Bootstrap implements ApplicationRunner {
 
             Role role = roleService.getOrCreateRole(E_Role.ROLE_ADMIN);
             Address address = Address.builder()
-                                     .City("Bangalore")
-                                     .State("Karnataka")
-                                     .ZipCode(String.valueOf(110032L))
-                                     .Country("India")
+                                     .city("Bangalore")
+                                     .state("Karnataka")
+                                     .zipCode(String.valueOf(110032L))
+                                     .country("India")
                                      .addressLine("198 7th BSK ")
-                                     .Label("Office")
+                                     .label("Office")
                                      .build();
             User user = User.builder()
                             .firstName("Muthu")

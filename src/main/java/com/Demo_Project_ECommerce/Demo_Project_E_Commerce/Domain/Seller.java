@@ -19,10 +19,10 @@ public class Seller
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long   User_Id;             // foreign key for (Seller_Table)
-    private String Gst_No;
-    private String Company_Contact;
-    private String Company_Name;
+    private Long   id;             // foreign key for (Seller_Table)
+    private String gstNo;
+    private String companyContact;
+    private String companyName;
     @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = " User_Id", referencedColumnName = "Id")
     private User   user;

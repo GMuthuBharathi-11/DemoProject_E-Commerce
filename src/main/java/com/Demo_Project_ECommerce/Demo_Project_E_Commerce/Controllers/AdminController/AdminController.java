@@ -8,7 +8,6 @@ import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.AdminService.
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.CustomerService.CustomerService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.SellerService.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequestMapping("/api/admin")
 
 public class AdminController {
-
     @Autowired
     private AdminService adminService;
 
@@ -33,11 +31,9 @@ public class AdminController {
     @Autowired
     private SellerService sellerService;
 
-
     @GetMapping("/customers")
     public List<Customer> findallcustomers() {
-
-        return customerService.findAllcustomer();
+        return (List<Customer>) customerService.findAllCustomers();
     }
 
     @GetMapping("/customer/{Id}")
@@ -46,26 +42,34 @@ public class AdminController {
     }
 
     @PutMapping("/customer/{Id}/activated")
-    public String activateCustomer(@PathVariable Long Id){return customerService.CustomerActivate(Id);}
+    public String activateCustomer(@PathVariable Long Id) {return customerService.CustomerActivate(Id);}
 
     @PutMapping("/customer/{Id}/deactivated")
-    public String deactivateCustomer(@PathVariable Long Id){return customerService.CustomerDeActivation(Id);}
-
-
-    @PutMapping("/seller/{Id}/activated")
-    public String activateSeller(@PathVariable Long Id){return sellerService.SellerActivate(Id);}
-
-    @PutMapping("/seller/{Id}/deactivated")
-    public String deactivateSeller(@PathVariable Long Id){return sellerService.SellerDeActivate(Id);}
-
+    public String deactivateCustomer(@PathVariable Long Id) {return customerService.CustomerDeActivation(Id);}
 
     @GetMapping("/sellers")
     public List<Seller> findAllSeller() {
-
         return (List<Seller>) sellerService.findAllSellers();
 
     }
 
+    @GetMapping("/seller/{Id}")
+    public Seller findSellerById(@PathVariable Long Id) {
+        return sellerService.findOne(Id);
+    }
 
+    @PutMapping("/seller/{Id}/activated")
+    public String activateSeller(@PathVariable Long Id) {
+        return sellerService.SellerActivate(Id);
+    }
+
+    @PutMapping("/seller/{Id}/deactivated")
+    public String deactivateSeller(@PathVariable Long Id) {
+        return sellerService.SellerDeActivate(Id);
+    }
 
 }
+
+
+
+

@@ -16,7 +16,7 @@ public class RoleService {
 
     public Role getOrCreateRole(E_Role e_role) {
         return role_repository
-                .findByRoleName(e_role)
+                .findByroleName(e_role)
                 .orElseGet(() -> role_repository.save(Role.builder()
                                                           .roleName(e_role)
                                                           .build()));

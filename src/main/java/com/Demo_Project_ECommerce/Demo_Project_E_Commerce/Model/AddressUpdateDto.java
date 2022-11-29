@@ -6,22 +6,24 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 @Service
 public class AddressUpdateDto
 {
-    private  String City;
+    @Size(min=2)
+    private  String city;
     @NotNull
-    private String Label;
-    private String State;
+    private String label;
+    private String state;
     @NotNull
-    private String AddressLine;
-    @Pattern(regexp="^[a-zA-Z0-9]{3}",message="Incorrect zip format")
-    private String ZipCode;
+    private String addressLine;
+    //@Pattern(regexp="^[a-zA-Z0-9]{3}",message="Incorrect zip format")
+    private String zipCode;
     @NotNull
-    private String Country;
+    private String country;
 
 
 }

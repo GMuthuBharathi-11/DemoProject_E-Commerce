@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class SellerRegistrationRequest extends UserDetails
 {
-    private String Gst_No;
-    private String Company_Contact;
-    private String Company_Name;
+    private String gstNo;
+    private String companyContact;
+    private String companyName;
 }

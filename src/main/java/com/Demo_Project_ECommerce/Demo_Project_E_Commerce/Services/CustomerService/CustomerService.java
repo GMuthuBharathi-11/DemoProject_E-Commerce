@@ -128,7 +128,7 @@ public class CustomerService {
         if (userProfileDto.getEmail() != null)
             customer.getUser().setEmail(userProfileDto.getEmail());
         if (userProfileDto.getContactNo() != null)
-            customer.setContact_No(userProfileDto.getContactNo());
+            customer.setPhoneNumber(userProfileDto.getContactNo());
 
         customerRepository.save(customer);
 
@@ -142,12 +142,12 @@ public class CustomerService {
                                         .orElseThrow(()->new ECommerceApplicationException("No user found"));
 
         Address address = Address.builder()
-                                 .City(addAddressDto.getCity())
-                                 .State(addAddressDto.getState())
-                                 .Country(addAddressDto.getCountry())
+                                 .city(addAddressDto.getCity())
+                                 .state(addAddressDto.getState())
+                                 .country(addAddressDto.getCountry())
                                  .addressLine(addAddressDto.getAddressLine())
-                                 .Label(addAddressDto.getLabel())
-                                 .ZipCode(addAddressDto.getZipCode())
+                                 .label(addAddressDto.getLabel())
+                                 .zipCode(addAddressDto.getZipCode())
                                  .build();
 
         customer.getUser().getAddressSet().add(address);
@@ -190,14 +190,15 @@ public class CustomerService {
 
         return "Address Updated Successfully";
     }
-    public String DeleteAddress(Long Id,String email){
 
-        User userEntity=userRepository.findByEmail(email)
-                                            .orElseThrow(()->new ECommerceApplicationException("No User Found"));
-        Customer customer=customerRepository.findByUser(userEntity)
-                                      .orElseThrow(()-> new ECommerceApplicationException("No User Found"));
-        Address address= addressRepository.findById(Id)
-                                    .orElseThrow(()->new ECommerceApplicationException("No Address Found"));
+    public String DeleteAddress(Long Id, String email) {
+
+        User userEntity = userRepository.findByEmail(email)
+                                        .orElseThrow(() -> new ECommerceApplicationException("No User Found"));
+        Customer customer = customerRepository.findByUser(userEntity)
+                                              .orElseThrow(() -> new ECommerceApplicationException("No User Found"));
+        Address address = addressRepository.findById(Id)
+                                           .orElseThrow(() -> new ECommerceApplicationException("No Address Found"));
         addressRepository.delete(address);
         return "Address Deleted Successfully";
 

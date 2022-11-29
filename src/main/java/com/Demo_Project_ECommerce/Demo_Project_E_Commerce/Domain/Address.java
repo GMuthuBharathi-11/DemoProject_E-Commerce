@@ -19,20 +19,11 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)         // primary key
     private Long   Id;
-    private String City;
-    private String State;
+    private String city;
+    private String state;
     private String addressLine;
-    private String Country;
-    private String ZipCode;
-    private String Label;
-//    private Long   User_Id;                                     // foreign key
-//
-//    @ManyToOne
-//    @JoinColumn(name = "customer_user_id")
-//    private Customer customer;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "user_table_id")
-//    private User user;
+    private String country;
+    private String zipCode;
+    private String label;
 
 }
