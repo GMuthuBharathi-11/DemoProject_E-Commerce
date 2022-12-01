@@ -31,9 +31,10 @@ public class AdminController {
     @Autowired
     private SellerService sellerService;
 
+
     @GetMapping("/customers")
     public List<Customer> findallcustomers() {
-        return (List<Customer>) customerService.findAllCustomers();
+        return customerService.findAllCustomers();
     }
 
     @GetMapping("/customer/{Id}")
@@ -42,15 +43,14 @@ public class AdminController {
     }
 
     @PutMapping("/customer/{Id}/activated")
-    public String activateCustomer(@PathVariable Long Id) {return customerService.CustomerActivate(Id);}
+    public String activateCustomer(@PathVariable Long Id){return customerService.CustomerActivate(Id);}
 
     @PutMapping("/customer/{Id}/deactivated")
-    public String deactivateCustomer(@PathVariable Long Id) {return customerService.CustomerDeActivation(Id);}
+    public String deactivateCustomer(@PathVariable Long Id){return customerService.CustomerDeActivation(Id);}
 
     @GetMapping("/sellers")
     public List<Seller> findAllSeller() {
-        return (List<Seller>) sellerService.findAllSellers();
-
+        return sellerService.findAllSellers();
     }
 
     @GetMapping("/seller/{Id}")
@@ -59,14 +59,10 @@ public class AdminController {
     }
 
     @PutMapping("/seller/{Id}/activated")
-    public String activateSeller(@PathVariable Long Id) {
-        return sellerService.SellerActivate(Id);
-    }
+    public String activateSeller(@PathVariable Long Id){return sellerService.SellerActivate(Id);}
 
     @PutMapping("/seller/{Id}/deactivated")
-    public String deactivateSeller(@PathVariable Long Id) {
-        return sellerService.SellerDeActivate(Id);
-    }
+    public String deactivateSeller(@PathVariable Long Id){return sellerService.SellerDeActivate(Id);}
 
 }
 

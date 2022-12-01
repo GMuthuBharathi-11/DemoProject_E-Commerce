@@ -5,7 +5,6 @@ import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.Auth
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Configuration.JWT.JwtUtils;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.UserService.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,9 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 @EnableWebSecurity
+
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtUtils jwtUtils;
@@ -63,6 +64,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("api/customer/**").permitAll()
             .antMatchers("/customer/register").permitAll()
             .antMatchers("/seller/register").permitAll()
+            .antMatchers("/upload").permitAll()
+            .antMatchers("/download/**").permitAll()
             .antMatchers("/login").permitAll()
             .anyRequest()
             .authenticated()

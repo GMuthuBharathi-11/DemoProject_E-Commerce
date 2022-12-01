@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
-
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class RefreshToken
 {
       @Id
@@ -21,6 +20,6 @@ public class RefreshToken
         private LocalDateTime expiresAt;
 
         @OneToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = " User_Id",referencedColumnName = "Id")
+        @JoinColumn(name = "user_id",referencedColumnName = "Id")
         private User user;
 }

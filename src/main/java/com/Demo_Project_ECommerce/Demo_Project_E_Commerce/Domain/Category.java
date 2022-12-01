@@ -1,40 +1,26 @@
 //package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain;
 //import lombok.Getter;
+//import lombok.NoArgsConstructor;
 //import lombok.Setter;
 //import javax.persistence.*;
 //import javax.validation.constraints.NotBlank;
 //
 //@Getter
 //@Setter
+//@NoArgsConstructor
 //@Entity
 //@Table(name ="category")
-//public class Category
-//{
+//public class Category {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long Id;
+//    private Integer categoryId;
 //    @Column(name = "category_name")
 //    private @NotBlank String categoryName;
 //
-//    private @NotBlank String description;
+//    @OneToOne(targetEntity = Seller.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "Id", referencedColumnName = "Id")
+//    @Column(name= "category_parent_id")
+//    private String parent_Id;
 //
-//    private @NotBlank String imageUrl;
-//
-//
-//    public Category() {
-//    }
-//    public Category(@NotBlank String categoryName, @NotBlank String description) {
-//        this.categoryName = categoryName;
-//        this.description = description;
-//    }
-//    public Category(@NotBlank String categoryName, @NotBlank String description, @NotBlank String imageUrl) {
-//        this.categoryName = categoryName;
-//        this.description = description;
-//        this.imageUrl = imageUrl;
-//    }
-//
-////    public String getCategoryName()
-////    {
-////        return
-////    }
 //}
+//

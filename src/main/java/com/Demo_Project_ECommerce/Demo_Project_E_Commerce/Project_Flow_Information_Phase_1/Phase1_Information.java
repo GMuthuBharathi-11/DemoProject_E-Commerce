@@ -22,3 +22,13 @@
 //######-------   add the data use @PostMapping and check in the workbench ----------
 //---- Register API Part(Postmapping Done)
 //---- Login and Logout Process
+//Done Phase-1
+//Phase-2
+//Customer API -- done
+//Seller API  -- done
+//Admin API  --done
+//Left with Image Part --Done
+//Phase -3
+//Category API
+//Product API
+// Category API (Update)

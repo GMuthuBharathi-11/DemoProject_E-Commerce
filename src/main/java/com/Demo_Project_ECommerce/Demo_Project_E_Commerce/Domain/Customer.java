@@ -23,11 +23,12 @@ public class Customer
     //Setting Parameters for Customer
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long   id;
+    private Long   Id;
     @NotNull//Foreign Key taking reference from User_role
     private String phoneNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = User.class,cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
     private User user;
 
 }

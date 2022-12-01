@@ -10,11 +10,11 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class RegistrationRequest {
-    private String FirstName;
-    private String LastName;
-    @Email
-    private String Email;
+    private String firstName;
+    private String lastName;
+    @Email(message = "invalid email")
+    private String email;
     @NotNull
-    private String Password;
+    private String password;
 
 }

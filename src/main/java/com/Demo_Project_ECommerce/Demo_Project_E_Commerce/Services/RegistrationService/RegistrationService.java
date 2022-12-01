@@ -1,15 +1,18 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RegistrationService;
+
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.*;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.CustomerRegistrationRequest;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.SellerRegistrationRequest;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.*;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.CustomerRepository.CustomerRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.SellerRepository.SellerRepository;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.UserRepository.UserRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.ApplicationUserService.ApplicationUserService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RoleService.RoleService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -17,6 +20,7 @@ import java.util.UUID;
 @Service
 public class RegistrationService {
     private final ApplicationUserService application_user_service;
+    private final UserRepository userRepository;
     private final CustomerRepository customer_repository;
     private final RoleService  role_service;
     private final SellerRepository seller_repository;
@@ -25,19 +29,20 @@ public class RegistrationService {
 
     public RegistrationService(
             ApplicationUserService application_user_service,
-            CustomerRepository customer_repository,
+            CustomerRepository customer_repository,UserRepository userRepository,
             RoleService role_service, SellerRepository seller_repository,
             PasswordEncoder passwordEncoder,
             EmailSenderService emailSenderService
                               ) {
         this.application_user_service = application_user_service;
         this.customer_repository      = customer_repository;
+        this.userRepository= userRepository;
         this.role_service             = role_service;
         this.seller_repository        = seller_repository;
         this.passwordEncoder = passwordEncoder;
         this.emailSenderService       = emailSenderService;
     }
-    public String registerCustomer(CustomerRegistrationRequest customerRegisterRequest) {
+    public String registerCustomer(@Valid CustomerRegistrationRequest customerRegisterRequest) {
 
         Address address = Address.builder()
                                  .city(customerRegisterRequest.getCity())
@@ -55,18 +60,20 @@ public class RegistrationService {
                         .lastName(customerRegisterRequest.getLastName())
                         .middleName(customerRegisterRequest.getMiddleName())
                         .email(customerRegisterRequest.getEmail())
-                        .password(customerRegisterRequest.getPassword())
+                        //.password(customerRegisterRequest.getPassword())
+                        .password(passwordEncoder.encode(customerRegisterRequest.getPassword()))
+                        .passwordcreatedAt(LocalDateTime.now())
                         .isActive(Boolean.FALSE)
                         .isDeleted(Boolean.FALSE)
                         .isLocked(Boolean.FALSE)
                         .isExpired(Boolean.FALSE)
-                        .AddressSet(Set.of(address))
-                        .roles(Set.of(new Role()))
+                        .addressSet(Set.of(address))
+                        .roles(Set.of(role))
                         .build();
 
         Customer customer = Customer.builder()
                                     .phoneNumber(customerRegisterRequest.getContactNumber())
-                                    .id(user.getId())
+                                    .user(user)
                                     .build();
         customer_repository.save(customer);
 
@@ -80,7 +87,7 @@ public class RegistrationService {
         return "Cutomer Registered Successfully"+ " Please check your email to activate your profile";
 
     }
-    public String registerSeller(SellerRegistrationRequest sellerRegisterRequest) {
+    public String registerSeller(@Valid SellerRegistrationRequest sellerRegisterRequest) {
 
         Address address = Address.builder()
                                  .city(sellerRegisterRequest.getCity())
@@ -104,8 +111,8 @@ public class RegistrationService {
                         .isDeleted(Boolean.FALSE)
                         .isLocked(Boolean.FALSE)
                         .isExpired(Boolean.FALSE)
-                        .AddressSet(Set.of(address))
-                        .roles(Set.of(new Role()))
+                        .addressSet(Set.of(address))
+                        .roles(Set.of(role))
                         .build();
 
         Seller seller = Seller.builder()

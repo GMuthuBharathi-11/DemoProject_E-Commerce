@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface SellerRepository extends PagingAndSortingRepository<Seller, Long> {
+public interface SellerRepository extends JpaRepository<Seller, Long> {
     Optional<Seller> findByUser(User user);
 
 }

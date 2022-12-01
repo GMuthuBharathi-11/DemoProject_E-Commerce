@@ -1,4 +1,5 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@Getter
-@Setter
-@Service
+@Data
+@NoArgsConstructor
 public class AddressUpdateDto
 {
     @Size(min=2)
@@ -24,6 +24,4 @@ public class AddressUpdateDto
     private String zipCode;
     @NotNull
     private String country;
-
-
 }

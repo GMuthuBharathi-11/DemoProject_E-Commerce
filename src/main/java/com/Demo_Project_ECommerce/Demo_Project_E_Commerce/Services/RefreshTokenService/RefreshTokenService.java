@@ -1,10 +1,13 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.RefreshTokenService;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.CustomizeErrorHandling.ECommerceApplicationException;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.RefreshToken;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.User;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.RefreshTokenRepository.RefreshTokenRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.UserRepository.UserRepository;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -19,14 +22,23 @@ public class RefreshTokenService
         this.userRepository = userRepository;
     }
 
-    public RefreshToken generateRefreshToken() {
-        RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setToken(UUID.randomUUID().toString());
-//        refreshToken.setCreatedDate(Instant.now());
-
-        return refreshTokenRepository.save(refreshToken);
+    public RefreshToken generateRefreshToken(String userEmail) {
+        User         user         = userRepository.findByEmail(userEmail).orElseThrow(() -> new ECommerceApplicationException("No user found"));
+        RefreshToken refreshToken = refreshTokenRepository.findByUser(user).orElse(null);
+        if (refreshToken == null) {
+            RefreshToken newRefreshToken = new RefreshToken();
+            newRefreshToken.setToken(UUID.randomUUID().toString());
+            newRefreshToken.setCreatedAt(Instant.now());
+            newRefreshToken.setUser(user);
+            newRefreshToken.setExpiresAt(LocalDateTime.now().plusMinutes(30));
+            return refreshTokenRepository.save(newRefreshToken);
+        }
+        else {
+            refreshToken.setToken(UUID.randomUUID().toString());
+            refreshToken.setExpiresAt(LocalDateTime.now().plusMinutes(30));
+            return refreshTokenRepository.save(refreshToken);
+        }
     }
-
     public void validateRefreshToken(String token) {
         refreshTokenRepository.findByToken(token)
                         .orElseThrow(() -> new RuntimeException("Invalid refresh Token"));

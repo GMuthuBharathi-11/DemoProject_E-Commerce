@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/seller")
@@ -23,18 +25,19 @@ public class SellerController {
     }
 
     @PutMapping("/update-address")
-    public String SellerUpdateAddress(@RequestBody AddressUpdateDto addressUpdateDto) {
+    public String SellerUpdateAddress(@Valid @RequestBody AddressUpdateDto addressUpdateDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         sellerService.updateMyAddress(authentication.getName(), addressUpdateDto);
         return "Address Updated Successfully";
     }
 
     @PutMapping("/update-profile")
-    public String SellerUpdateProfile(@RequestBody UserProfileDto userProfileDto) {
+    public String SellerUpdateProfile(@Valid @RequestBody UserProfileDto userProfileDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         sellerService.UpdateMyprofile(authentication.getName(), userProfileDto);
         return "Profile Updated Successfully";
     }
+
 }
 
 

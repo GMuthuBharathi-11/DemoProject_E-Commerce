@@ -3,6 +3,7 @@ package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name="seller")
 public class Seller

@@ -2,9 +2,9 @@ package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.CustomerServ
 
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.CustomizeErrorHandling.ECommerceApplicationException;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Address;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Customer;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.User;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Customer;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.AddaddressDto;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.AddressUpdateDto;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.UserProfileDto;
@@ -12,11 +12,9 @@ import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.AddressRe
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.CustomerRepository.CustomerRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.UserRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -39,14 +37,10 @@ public class CustomerService {
         return customer;
     }
 
-    public List<Customer> findAllcustomer() {
-        List<Customer> result = (List<Customer>) customerRepository.findAll();
-        return result;
-    }
 
-    public Page<Customer> findAllCustomers() {
-        PageRequest    pageable = PageRequest.of(0, 10, Sort.Direction.ASC, "Id");
-        Page<Customer> result   = customerRepository.findAll(pageable);
+    public List<Customer> findAllCustomers() {
+        // PageRequest pageable = PageRequest.of(0, 10, Sort.Direction.ASC, "Id");
+        List<Customer> result = (List<Customer>) customerRepository.findAll();
         return result;
     }
 
@@ -93,9 +87,8 @@ public class CustomerService {
             return "Customer is Deactivated";
         }
     }
-
-    public Customer getCustomerProfile(String name) {
-
+    public Customer getCustomerProfile(String name)
+    {
         User user = userRepository.findByEmail(name)
                                   .orElseThrow(() -> new ECommerceApplicationException("No user found"));
 
@@ -133,7 +126,7 @@ public class CustomerService {
         customerRepository.save(customer);
 
     }
-    public String addAddress(String email, AddaddressDto addAddressDto){
+    public String addAddress(String email, @Valid AddaddressDto addAddressDto){
 
         User user = userRepository.findByEmail(email)
                                         .orElseThrow(()->new ECommerceApplicationException("No user found"));
@@ -157,7 +150,7 @@ public class CustomerService {
         return "Address added successfully";
     }
 
-    public String UpdateMyAddress(long Id, String email, AddressUpdateDto addressUpdateDto){
+    public String UpdateMyAddress(long Id, String email, @Valid AddressUpdateDto addressUpdateDto){
 
         User user=userRepository.findByEmail(email)
                                             .orElseThrow(()->new ECommerceApplicationException("No User Found"));
@@ -201,6 +194,5 @@ public class CustomerService {
                                            .orElseThrow(() -> new ECommerceApplicationException("No Address Found"));
         addressRepository.delete(address);
         return "Address Deleted Successfully";
-
     }
 }

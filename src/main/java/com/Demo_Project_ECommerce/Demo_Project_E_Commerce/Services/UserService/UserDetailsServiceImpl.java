@@ -42,8 +42,6 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
 
 
     }
-
-
         private Collection<? extends GrantedAuthority> getAuthority(Set<Role> roles)
         {
             ArrayList<GrantedAuthority> authorities = new ArrayList<>();

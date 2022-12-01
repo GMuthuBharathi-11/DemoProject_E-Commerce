@@ -1,22 +1,19 @@
 package com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Services.SellerService;
 
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.CustomizeErrorHandling.ECommerceApplicationException;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Customer;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.AddressUpdateDto;
-import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Address;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.Seller;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Domain.User;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Email.EmailSenderService.EmailSenderService;
+import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.AddressUpdateDto;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Model.UserProfileDto;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.AddressRepository.AddressRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.SellerRepository.SellerRepository;
 import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.Repositories.UserRepository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -37,9 +34,9 @@ public class SellerService {
         return seller;
     }
 
-    public Page<Seller> findAllSellers() {
-        PageRequest    pageable = PageRequest.of(0, 10, Sort.Direction.ASC, "Id");
-        Page<Seller> result   = sellerRepository.findAll(pageable);
+    public List<Seller> findAllSellers() {
+        //PageRequest    pageable = PageRequest.of(0, 10, Sort.Direction.ASC, "Id");
+        List<Seller> result   = (List<Seller>) sellerRepository.findAll();
         return result;
            }
 
@@ -93,7 +90,7 @@ public class SellerService {
         return seller;
     }
 
-    public void updateMyAddress(String name, AddressUpdateDto addressUpdateDto) {
+    public void updateMyAddress(String name, @Valid AddressUpdateDto addressUpdateDto) {
         User user = userRepository.findByEmail(name)
                                   .orElseThrow(() -> new ECommerceApplicationException("No user found"));
 
@@ -124,7 +121,7 @@ public class SellerService {
         addressRepository.save(address);
     }
 
-    public void UpdateMyprofile(String name, UserProfileDto userProfileDto) {
+    public void UpdateMyprofile(String name, @Valid UserProfileDto userProfileDto) {
 
         User user = userRepository.findByEmail(name)
                                   .orElseThrow(() -> new ECommerceApplicationException("No user found"));
