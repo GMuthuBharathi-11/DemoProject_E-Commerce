@@ -1,11 +1,12 @@
 package com.DemoProjectECommerce.ECommerce.services.oauthservice;
 
 import com.DemoProjectECommerce.ECommerce.customizehandling.ECommerceApplicationException;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.User;
+
+import com.DemoProjectECommerce.ECommerce.entity.RefreshToken;
+import com.DemoProjectECommerce.ECommerce.entity.User;
 import com.DemoProjectECommerce.ECommerce.model.authencticationdto.RefreshTokenRequest;
 import com.DemoProjectECommerce.ECommerce.repositories.userrepository.UserRepository;
 import com.DemoProjectECommerce.ECommerce.configuration.JWT.JwtUtils;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.RefreshToken;
 import com.DemoProjectECommerce.ECommerce.model.authencticationdto.AuthenticationResponse;
 import com.DemoProjectECommerce.ECommerce.model.authencticationdto.LoginRequest;
 import com.DemoProjectECommerce.ECommerce.repositories.refreshtokenrepository.RefreshTokenRepository;

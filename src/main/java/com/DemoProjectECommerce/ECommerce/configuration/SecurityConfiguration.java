@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EnableWebSecurity
-
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtUtils jwtUtils;
@@ -45,7 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService)
             .passwordEncoder(passwordEncoder());
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
@@ -57,6 +55,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/api/user/**").permitAll()
+            .antMatchers("/api/register").permitAll()
+            .antMatchers("/category").permitAll()
             .antMatchers("/api/forget/**").permitAll()
             .antMatchers("/api/admin/**").hasRole("ADMIN")
             .antMatchers("/api/seller/**").hasRole("SELLER")
@@ -64,9 +64,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("api/customer/**").hasRole("CUSTOMER")
             .antMatchers("/customer/register").permitAll()
             .antMatchers("/seller/register").permitAll()
+            .antMatchers("/image").permitAll()
+            .antMatchers("/download/{fileId}").permitAll()
             .antMatchers("/upload").permitAll()
-            .antMatchers("/download/**").permitAll()
             .antMatchers("/login").permitAll()
+            .antMatchers("/actuator/**").permitAll()
+            .antMatchers("/v3/api-docs/**").permitAll()
+            .antMatchers("/swagger-ui/**").permitAll()
             .anyRequest()
             .authenticated()
             .and()

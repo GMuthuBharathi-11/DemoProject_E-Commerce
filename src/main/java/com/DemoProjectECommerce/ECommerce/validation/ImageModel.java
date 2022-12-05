@@ -7,11 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ImageModel {
-    @WebServlet(name = "Servlet model", value = "/Servlet model")
-    public class Imagemodel extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        }
+@WebServlet(name = "Servlet model", value = "/Servlet model")
+public class ImageModel extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                          IOException {
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+                                                                                           IOException {
+
     }
 }
+

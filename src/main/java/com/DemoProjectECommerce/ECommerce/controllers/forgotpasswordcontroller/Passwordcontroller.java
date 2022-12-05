@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/regiter")
+@RequestMapping("/api/register")
 public class Passwordcontroller
 {
     @Autowired
@@ -19,7 +19,6 @@ public class Passwordcontroller
         return forgetResetPasswordService.forgetPassword(email);
 
     }
-
     @PutMapping("/ResetPassword/{Token}")
     public String resetToken(@PathVariable String Token, @Valid @RequestBody PasswordDto passwordDto){
 

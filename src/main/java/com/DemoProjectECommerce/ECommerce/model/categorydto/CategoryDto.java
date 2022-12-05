@@ -1,14 +1,22 @@
 package com.DemoProjectECommerce.ECommerce.model.categorydto;
-import lombok.Getter;
-import lombok.Setter;
+
+import com.DemoProjectECommerce.ECommerce.entity.Category;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.util.Set;
+
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CategoryDto
 {
     private Long                  id;
     private String                name;
-    private CategoryDto           parentCategoryId;
+    private Category              parentCategory;
     private Set<ChildCategoryDto> childCategoryId;
+
 }

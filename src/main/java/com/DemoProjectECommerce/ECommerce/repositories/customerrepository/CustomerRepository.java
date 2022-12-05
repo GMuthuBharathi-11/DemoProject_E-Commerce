@@ -1,7 +1,8 @@
 package com.DemoProjectECommerce.ECommerce.repositories.customerrepository;
 
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Customer;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.User;
+
+import com.DemoProjectECommerce.ECommerce.entity.Customer;
+import com.DemoProjectECommerce.ECommerce.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

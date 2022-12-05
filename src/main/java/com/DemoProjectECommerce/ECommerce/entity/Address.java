@@ -1,12 +1,12 @@
-package com.DemoProjectECommerce.ECommerce.entity.entitybasic;
+package com.DemoProjectECommerce.ECommerce.entity;
 
-import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
 
 @SuperBuilder
 @Getter

@@ -1,12 +1,12 @@
 package com.DemoProjectECommerce.ECommerce.services.sellerservice;
 
 import com.DemoProjectECommerce.ECommerce.customizehandling.ECommerceApplicationException;
+import com.DemoProjectECommerce.ECommerce.entity.Address;
+import com.DemoProjectECommerce.ECommerce.entity.Seller;
+import com.DemoProjectECommerce.ECommerce.entity.User;
 import com.DemoProjectECommerce.ECommerce.model.customerdto.AddressUpdateDto;
 import com.DemoProjectECommerce.ECommerce.repositories.sellerrepository.SellerRepository;
 import com.DemoProjectECommerce.ECommerce.repositories.userrepository.UserRepository;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Address;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Seller;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.User;
 import com.DemoProjectECommerce.ECommerce.email.emailsenderservice.EmailSenderService;
 import com.DemoProjectECommerce.ECommerce.model.userdto.UserProfileDto;
 import com.DemoProjectECommerce.ECommerce.repositories.addressrepository.AddressRepository;
@@ -132,8 +132,8 @@ public class SellerService {
             seller.getUser().setMiddleName(userProfileDto.getMiddleName());
         if (userProfileDto.getLastName() != null)
             seller.getUser().setLastName(userProfileDto.getLastName());
-        if (userProfileDto.getEmail() != null)
-            seller.getUser().setEmail(userProfileDto.getEmail());
+//        if (userProfileDto.getEmail() != null)
+//            seller.getUser().setEmail(userProfileDto.getEmail());
         if (userProfileDto.getContactNo() != null)
             seller.setCompanyContact(userProfileDto.getContactNo());
 

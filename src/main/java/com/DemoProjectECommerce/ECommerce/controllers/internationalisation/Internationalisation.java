@@ -1,9 +1,8 @@
 package com.DemoProjectECommerce.ECommerce.controllers.internationalisation;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.context.MessageSource;
-
 import java.util.Locale;
 
 

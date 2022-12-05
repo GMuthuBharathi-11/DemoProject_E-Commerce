@@ -1,5 +1,6 @@
 package com.DemoProjectECommerce.ECommerce.services.registrationservice;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.*;
+
+import com.DemoProjectECommerce.ECommerce.entity.*;
 import com.DemoProjectECommerce.ECommerce.services.applicationUserservice.ApplicationUserService;
 import com.DemoProjectECommerce.ECommerce.repositories.customerrepository.CustomerRepository;
 import com.DemoProjectECommerce.ECommerce.repositories.sellerrepository.SellerRepository;
@@ -78,9 +79,12 @@ public class RegistrationService
         emailSenderService.sendMail(
                 customerRegisterRequest.getEmail(),
                 "Activate Your Account",
-                "Please activate your account");
+                "Please activate your account" +"\n"
+                     + "https://www.tothenew.com/");
         return "Customer Registered Successfully"    +
                " Please check your email to activate your profile";
+
+
     }
     public String registerSeller(@Valid SellerRegistrationRequest sellerRegisterRequest)
     {
@@ -118,9 +122,7 @@ public class RegistrationService
                               .build();
 
         sellerRepository.save(seller);
-
         String token = UUID.randomUUID().toString();
-
         emailSenderService.sendMail(
                 sellerRegisterRequest.getEmail(),
                 "Activate Your Account",

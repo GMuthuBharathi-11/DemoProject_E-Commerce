@@ -1,5 +1,6 @@
 package com.DemoProjectECommerce.ECommerce.validation;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.*;
+
+import com.DemoProjectECommerce.ECommerce.entity.*;
 import com.DemoProjectECommerce.ECommerce.repositories.adminrepository.AdminRepository;
 import com.DemoProjectECommerce.ECommerce.repositories.rolerepository.RoleRepository;
 import com.DemoProjectECommerce.ECommerce.repositories.userrepository.UserRepository;

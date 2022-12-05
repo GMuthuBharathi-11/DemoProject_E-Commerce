@@ -19,7 +19,7 @@ public class AuthController
     @Autowired
     AuthService authService;
     @Autowired
-    JwtUtils    jwtUtils;
+    JwtUtils jwtUtils;
     @Autowired
     private RefreshTokenService refreshTokenService;
     @PostMapping("/login")

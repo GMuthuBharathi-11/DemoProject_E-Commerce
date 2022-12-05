@@ -1,13 +1,18 @@
 package com.DemoProjectECommerce.ECommerce.services.categoryservice;
-import com.DemoProjectECommerce.ECommerce.repositories.categoryrepository.MetaDataFieldRepository;
-import com.DemoProjectECommerce.ECommerce.entity.categoryentity.CategoryMetadataField;
+
+
+import com.DemoProjectECommerce.ECommerce.entity.CategoryMetadataField;
 import com.DemoProjectECommerce.ECommerce.model.categorydto.MetaDataFieldDto;
+import com.DemoProjectECommerce.ECommerce.repositories.categoryrepository.MetaDataFieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.stream.Collectors;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
 public class MetaDataService
 {
     @Autowired

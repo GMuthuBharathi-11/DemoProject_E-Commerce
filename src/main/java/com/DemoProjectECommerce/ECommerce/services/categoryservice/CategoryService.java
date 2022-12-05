@@ -1,95 +1,102 @@
 package com.DemoProjectECommerce.ECommerce.services.categoryservice;
 
 import com.DemoProjectECommerce.ECommerce.customizehandling.ECommerceApplicationException;
-import com.DemoProjectECommerce.ECommerce.entity.categoryentity.Category;
-import com.DemoProjectECommerce.ECommerce.entity.categoryentity.CategoryMetadataField;
-import com.DemoProjectECommerce.ECommerce.entity.categoryentity.CategoryMetadataFieldValues;
+import com.DemoProjectECommerce.ECommerce.entity.Category;
+import com.DemoProjectECommerce.ECommerce.entity.CategoryMetadataField;
+import com.DemoProjectECommerce.ECommerce.entity.CategoryMetadataFieldValues;
 import com.DemoProjectECommerce.ECommerce.model.categorydto.AddingMetadataDto;
 import com.DemoProjectECommerce.ECommerce.model.categorydto.CategoryAddDto;
 import com.DemoProjectECommerce.ECommerce.model.categorydto.CategoryDto;
+import com.DemoProjectECommerce.ECommerce.model.categorydto.ChildCategoryDto;
 import com.DemoProjectECommerce.ECommerce.repositories.categoryrepository.CategoryRepository;
 import com.DemoProjectECommerce.ECommerce.repositories.categoryrepository.MetaDataFieldRepository;
 import com.DemoProjectECommerce.ECommerce.repositories.categoryrepository.MetaDataFieldValueRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
     @Autowired
-    CategoryRepository categoryRepository;
-
-    @Autowired
-    ModelMapper modelMapper;
-
+    CategoryRepository           categoryRepository;
     @Autowired
     MetaDataFieldRepository      metaDataFieldRepository;
     @Autowired
     MetaDataFieldValueRepository metaDataFieldValueRepository;
 
-    public String addCategory(CategoryAddDto category) {
-        Category newCategory = new Category();
+    public String addCategory(CategoryAddDto categoryDto) {
 
-        Optional<Category> getName = categoryRepository.findByName(category.getName().toLowerCase());
+//        Category newCategory = new Category();
+
+        Optional<Category> getName = categoryRepository.findByName(categoryDto.getName().toLowerCase());
 
         if (getName.isPresent()) {
-            throw new ECommerceApplicationException("Category name is already present");
+            throw new ECommerceApplicationException("Category Name is Already Present");
         }
 
-
-        newCategory.setName(category.getName());
-
-        if (category.getParentId() != null) {
+        if (Optional.ofNullable(categoryDto.getParentId()).isPresent()) {
             System.out.println("enter");
-            Category parent = categoryRepository.findById(category.getParentId())
-                                                .orElseThrow(() -> new ECommerceApplicationException("Category not "
-                                                                                                     + "found"));
-            newCategory.setParentCategoryId(parent);
-            Set<Category> child = new HashSet<>();
-            child.add(newCategory);
-            parent.setChildCategoryId(child);
+            Category newCategory = new Category();
+            newCategory.setName(categoryDto.getName());
+            Category parent = categoryRepository.findById(categoryDto.getParentId())
+                                                .orElseThrow(() -> new ECommerceApplicationException("Category Not "
+                                                                                                     + "Found"));
+            newCategory.setParentCategory(parent);
+            categoryRepository.save(newCategory);
             System.out.println("out");
         }
-
-        categoryRepository.save(newCategory);
+        else {
+            Category newCategory = new Category();
+            newCategory.setName(categoryDto.getName());
+            categoryRepository.save(newCategory);
+        }
 
         return "Created Category";
     }
+    public String updateCategory(CategoryDto category) {
+        Category newCategory = categoryRepository.findById(category.getId())
+                                                 .orElseThrow(() -> new ECommerceApplicationException("Category not found for corresponding Id"));
+        newCategory.setName(category.getName());
 
-//    Category newCategory = categoryRepository.findById().orElseThrow(() -> new CategoryNotFound("Category not found "
-//
-//        newCategory.(category.getName());
-//
-//        categoryRepository.save(newCategory);
-//
-//        return"Updated Category";
+        categoryRepository.save(newCategory);
 
-
-    public List<CategoryDto> viewCategoryList(Pageable pageable) {
-        Page<Category> categoryPage = categoryRepository.findAll(pageable);
-
-
-        List<CategoryDto> categoryDtoList = categoryPage.stream().map(e -> {
-            CategoryDto categoryDto = new CategoryDto();
-            modelMapper.map(e, categoryDto);
-            return categoryDto;
-        }).collect(Collectors.toList());
-        return categoryDtoList;
+        return "Updated Category";
     }
 
-    public CategoryDto findByCategoryId(Integer id) {
-        Category category = categoryRepository.findById(Long.valueOf(id)).get();
+    public Page<CategoryDto> viewCategoryList(Pageable pageable) {
+        Page<Category> categoryPage = categoryRepository.findAll(pageable);
 
-        CategoryDto categoryDto = new CategoryDto();
+        return categoryPage.map(category -> CategoryDto.builder()
+                                                       .id(category.getId())
+                                                       .name(category.getName())
+                                                       .childCategoryId(category.getChildCategoryId().stream()
+                                                       .map(child -> ChildCategoryDto.builder()
+                                                       .id(child.getId()).name(child.getName())
+                                                       .build())
+                                                       .collect(Collectors.toSet()))
+                                                       .parentCategory(category.getParentCategory())
+                                                       .build());
+    }
 
-        modelMapper.map(category, categoryDto);
+    public CategoryDto findByCategoryId(Long Id) {
+        Category category = categoryRepository.findById(Id)
+                                              .orElseThrow(() -> new ECommerceApplicationException(" No category "
+                                                                                                   + "Found with this"
+                                                                                                   + " " + Id));
+        return CategoryDto.builder()
+                          .id(category.getId())
+                          .name(category.getName())
+                          .childCategoryId(category.getChildCategoryId().stream()
+                          .map(child -> ChildCategoryDto.builder()
+                          .id(child.getId()).name(child.getName())
+                          .build())
+                          .collect(Collectors.toSet()))
+                          .parentCategory(category.getParentCategory())
+                          .build();
 
-        return categoryDto;
     }
 
     public void addMetadataFieldValues(AddingMetadataDto metadataDTO) {
@@ -97,7 +104,7 @@ public class CategoryService {
 
         Set<String> list = new HashSet<>(myList);
         if (list.size() != myList.size()) {
-            throw new ECommerceApplicationException("Value should not be duplicate");
+            throw new ECommerceApplicationException("Value Should Not Be Duplicate");
         }
 
         Category category = categoryRepository.findById(metadataDTO.getCategoryId())
@@ -107,7 +114,7 @@ public class CategoryService {
             throw new ECommerceApplicationException("Category is not a leaf node category");
         }
 
-        CategoryMetadataField metadataField = metaDataFieldRepository.findById(metadataDTO.getMetadataFeildId())
+        CategoryMetadataField metadataField = metaDataFieldRepository.findById(metadataDTO.getMetadataFieldId())
                                                                      .orElseThrow(() -> new ECommerceApplicationException("MetaDataField Des not exist"));
 
         CategoryMetadataFieldValues categoryMetadataFieldValues = new CategoryMetadataFieldValues();
@@ -119,9 +126,6 @@ public class CategoryService {
         metaDataFieldValueRepository.save(categoryMetadataFieldValues);
 
 
-    }
-
-    public void updateCategory(CategoryDto category) {
     }
 }
 

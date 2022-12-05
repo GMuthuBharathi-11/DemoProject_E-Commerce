@@ -3,8 +3,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -22,12 +24,11 @@ public class UserDetails
     private String addressLine;
     private String zipCode;
     private String label;
-    @Email
-    @JoinColumn(unique = true)
+//    @UniqueEmail
+    @NotBlank(message = "Email is mandatory")
+    @Column(unique=true)
     private String email;
     @NotNull
     private String password;
     private LocalDateTime passwordCreatedDate;
-
-
 }

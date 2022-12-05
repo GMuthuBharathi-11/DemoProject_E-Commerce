@@ -1,4 +1,5 @@
 package com.DemoProjectECommerce.ECommerce.customizehandling;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 
+@ControllerAdvice
 public class CustomiseExceptionHandling extends ResponseEntityExceptionHandler
 {
     @ExceptionHandler(ECommerceApplicationException.class)

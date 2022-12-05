@@ -1,26 +1,27 @@
-package com.DemoProjectECommerce.ECommerce.entity.entitybasic;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package com.DemoProjectECommerce.ECommerce.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import java.time.Instant;
-import java.time.LocalDateTime;
+import lombok.Data;
+
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RefreshToken
 {
-      @Id
+        @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
-        private String token;
-        private Instant createdAt;
+        private Long          id;
+        private String        token;
+        private Instant       createdAt;
         private LocalDateTime expiresAt;
 
         @OneToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "user_id",referencedColumnName = "Id")
+        @JoinColumn(name = "user_id", referencedColumnName = "Id")
         private User user;
 }

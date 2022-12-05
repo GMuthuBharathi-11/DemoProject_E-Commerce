@@ -1,7 +1,6 @@
-package com.DemoProjectECommerce.ECommerce.entity.entitybasic;
-import javax.validation.constraints.NotNull;
+package com.DemoProjectECommerce.ECommerce.entity;
 
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.User;
+import javax.validation.constraints.NotNull;
 import lombok.experimental.SuperBuilder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -20,13 +19,13 @@ public class Admin
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long   Id;                                     //primary key
+    private Long  Id;                                     //primary key
 
     @NotNull
     private String phoneNumber;
 
     @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "Id")
-    private User   user;
+    private User user;
 
 }

@@ -1,8 +1,10 @@
 package com.DemoProjectECommerce.ECommerce.model.imagedto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Data;
+
+
 
 @Data
 @NoArgsConstructor
@@ -12,5 +14,5 @@ public class ResponseImageDto
     private String fileName;
     private String downloadURL;
     private String fileType;
-    private Long fileSize;
+    private Long   fileSize;
 }

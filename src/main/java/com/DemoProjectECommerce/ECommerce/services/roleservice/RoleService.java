@@ -1,6 +1,7 @@
 package com.DemoProjectECommerce.ECommerce.services.roleservice;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.ERole;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Role;
+
+import com.DemoProjectECommerce.ECommerce.entity.ERole;
+import com.DemoProjectECommerce.ECommerce.entity.Role;
 import com.DemoProjectECommerce.ECommerce.repositories.rolerepository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

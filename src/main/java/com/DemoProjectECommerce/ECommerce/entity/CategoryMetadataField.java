@@ -1,4 +1,4 @@
-package com.DemoProjectECommerce.ECommerce.entity.categoryentity;
+package com.DemoProjectECommerce.ECommerce.entity;
 import javax.validation.constraints.NotBlank;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -12,10 +12,11 @@ public class CategoryMetadataField
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotBlank(message = "MetaDataFieldName cannot be null")
+    private Long Id;
 
+    @NotBlank(message = "MetaDataFieldName cannot be null")
     private String metaDataFieldName;
+
     @OneToMany(mappedBy = "categoryMetadataField")
     private Set<CategoryMetadataFieldValues> categoryMetadataFieldValues;
 }

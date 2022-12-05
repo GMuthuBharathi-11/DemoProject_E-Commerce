@@ -1,5 +1,7 @@
 package com.DemoProjectECommerce.ECommerce.configuration;
 import com.DemoProjectECommerce.ECommerce.customizehandling.ECommerceApplicationException;
+import com.DemoProjectECommerce.ECommerce.entity.Role;
+import com.DemoProjectECommerce.ECommerce.entity.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import com.DemoProjectECommerce.ECommerce.email.emailsenderservice.EmailSenderService;
 import com.DemoProjectECommerce.ECommerce.repositories.userrepository.UserRepository;
@@ -12,11 +14,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.Authentication;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.User;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Role;
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.Set;
+
 
 public class CustomAuthenticationManagerConfiguration implements AuthenticationManager
 {

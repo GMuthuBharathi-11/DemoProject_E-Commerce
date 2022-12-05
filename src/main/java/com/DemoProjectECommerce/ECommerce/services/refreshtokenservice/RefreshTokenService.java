@@ -1,9 +1,11 @@
 package com.DemoProjectECommerce.ECommerce.services.refreshtokenservice;
-import com.DemoProjectECommerce.ECommerce.customizehandling.ECommerceApplicationException;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.User;
-import com.DemoProjectECommerce.ECommerce.repositories.userrepository.UserRepository;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.RefreshToken;
+
+
 import com.DemoProjectECommerce.ECommerce.repositories.refreshtokenrepository.RefreshTokenRepository;
+import com.DemoProjectECommerce.ECommerce.customizehandling.ECommerceApplicationException;
+import com.DemoProjectECommerce.ECommerce.repositories.userrepository.UserRepository;
+import com.DemoProjectECommerce.ECommerce.entity.RefreshToken;
+import com.DemoProjectECommerce.ECommerce.entity.User;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.Instant;
@@ -16,9 +18,9 @@ import java.util.UUID;
 public class RefreshTokenService
 {
     private final RefreshTokenRepository refreshTokenRepository;
-    private final UserRepository         userRepository;
-    public RefreshTokenService(RefreshTokenRepository refresh_token_repository,UserRepository userRepository) {
-        this.refreshTokenRepository= refresh_token_repository;
+    private final UserRepository  userRepository;
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository,UserRepository userRepository) {
+        this.refreshTokenRepository= refreshTokenRepository;
         this.userRepository = userRepository;
     }
 

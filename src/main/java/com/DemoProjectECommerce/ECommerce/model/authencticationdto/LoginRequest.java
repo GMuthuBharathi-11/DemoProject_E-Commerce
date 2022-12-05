@@ -1,8 +1,10 @@
 package com.DemoProjectECommerce.ECommerce.model.authencticationdto;
+
 import javax.validation.constraints.NotNull;
 import lombok.experimental.SuperBuilder;
 import lombok.NoArgsConstructor;
 import lombok.Data;
+
 
 @NoArgsConstructor
 @SuperBuilder
@@ -14,4 +16,5 @@ public class LoginRequest
 
     @NotNull(message = "password cant be null")
     private String password;
+
 }

@@ -1,13 +1,12 @@
 package com.DemoProjectECommerce.ECommerce.services.forgetandresetpassword;
 
 import com.DemoProjectECommerce.ECommerce.customizehandling.ECommerceApplicationException;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.User;
+import com.DemoProjectECommerce.ECommerce.entity.RefreshToken;
+import com.DemoProjectECommerce.ECommerce.entity.User;
 import com.DemoProjectECommerce.ECommerce.model.passworddto.PasswordDto;
 import com.DemoProjectECommerce.ECommerce.repositories.refreshtokenrepository.RefreshTokenRepository;
 import com.DemoProjectECommerce.ECommerce.repositories.userrepository.UserRepository;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.RefreshToken;
 import com.DemoProjectECommerce.ECommerce.email.emailsenderservice.EmailSenderService;
-//import com.Demo_Project_ECommerce.Demo_Project_E_Commerce.ImageModel.PasswordDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,18 +36,17 @@ public class ForgetResetPasswordService
                                 .orElseThrow(() -> new ECommerceApplicationException("No user found"));
 
         String Token= UUID.randomUUID().toString();
-
         RefreshToken refreshToken =new RefreshToken();
         refreshToken.setUser(user);
         refreshToken.setToken(Token);
         refreshToken.setCreatedAt(Instant.now());
         refreshToken.setExpiresAt(LocalDateTime.now().plusMinutes(15));
-
         refreshTokenRepository
                 .save(refreshToken);
 
-        emailSenderService.sendMail(email,"Update Your Password","please reset your password by using " +
-                                                                 "the link http://localhost:8080/api/forget/ResetPassword/"+Token);
+        emailSenderService.sendMail(email,"Update Your Password",
+                                    "please reset your password by using " +
+                                      "the link http://localhost:8080/api/forget/ResetPassword/"+Token);
 
         return "Token is sent check  the mail";
 

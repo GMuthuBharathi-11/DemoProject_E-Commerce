@@ -1,11 +1,11 @@
 package com.DemoProjectECommerce.ECommerce.controllers.customercontroller;
 
+import com.DemoProjectECommerce.ECommerce.entity.Address;
+import com.DemoProjectECommerce.ECommerce.entity.Customer;
+import com.DemoProjectECommerce.ECommerce.services.customerservice.CustomerService;
 import com.DemoProjectECommerce.ECommerce.model.customerdto.AddressUpdateDto;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Address;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Customer;
 import com.DemoProjectECommerce.ECommerce.model.customerdto.AddaddressDto;
 import com.DemoProjectECommerce.ECommerce.model.userdto.UserProfileDto;
-import com.DemoProjectECommerce.ECommerce.services.customerservice.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

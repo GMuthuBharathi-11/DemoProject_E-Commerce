@@ -1,22 +1,24 @@
 package com.DemoProjectECommerce.ECommerce.services.customerservice;
 
 import com.DemoProjectECommerce.ECommerce.customizehandling.ECommerceApplicationException;
+import com.DemoProjectECommerce.ECommerce.entity.Address;
+import com.DemoProjectECommerce.ECommerce.entity.Customer;
+import com.DemoProjectECommerce.ECommerce.entity.User;
 import com.DemoProjectECommerce.ECommerce.model.customerdto.AddressUpdateDto;
 import com.DemoProjectECommerce.ECommerce.repositories.userrepository.UserRepository;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Address;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Customer;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.User;
 import com.DemoProjectECommerce.ECommerce.email.emailsenderservice.EmailSenderService;
 import com.DemoProjectECommerce.ECommerce.model.customerdto.AddaddressDto;
 import com.DemoProjectECommerce.ECommerce.model.userdto.UserProfileDto;
 import com.DemoProjectECommerce.ECommerce.repositories.addressrepository.AddressRepository;
 import com.DemoProjectECommerce.ECommerce.repositories.customerrepository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
+
 
 @Service
 public class CustomerService {
@@ -32,15 +34,13 @@ public class CustomerService {
 
     public Customer findCustomer(Long Id) {
         Customer customer = customerRepository.findById(Id)
-                                              .orElseThrow(() -> new ECommerceApplicationException("No user found "
-                                                                                                   + "with id : " + Id));
+                                              .orElseThrow(() -> new ECommerceApplicationException("No user found " + "with id : " + Id));
         return customer;
     }
 
 
-    public List<Customer> findAllCustomers() {
-        // PageRequest pageable = PageRequest.of(0, 10, Sort.Direction.ASC, "Id");
-        List<Customer> result = (List<Customer>) customerRepository.findAll();
+    public Page<Customer> findAllCustomers(Pageable pageable) {
+        Page<Customer> result =  customerRepository.findAll(pageable);
         return result;
     }
 
@@ -120,7 +120,7 @@ public class CustomerService {
         customerRepository.save(customer);
 
     }
-    public String addAddress(String email, @Valid AddaddressDto addAddressDto){
+    public String addAddress(String email, AddaddressDto addAddressDto){
 
         User user = userRepository.findByEmail(email)
                                         .orElseThrow(()->new ECommerceApplicationException("No user found"));
@@ -172,9 +172,9 @@ public class CustomerService {
         return "Address Updated Successfully";
     }
     public String DeleteAddress(Long Id, String email) {
-        User userEntity = userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                                         .orElseThrow(() -> new ECommerceApplicationException("No User Found"));
-        Customer customer = customerRepository.findByUser(userEntity)
+        Customer customer = customerRepository.findByUser(user)
                                               .orElseThrow(() -> new ECommerceApplicationException("No User Found"));
         Address address = addressRepository.findById(Id)
                                            .orElseThrow(() -> new ECommerceApplicationException("No Address Found"));

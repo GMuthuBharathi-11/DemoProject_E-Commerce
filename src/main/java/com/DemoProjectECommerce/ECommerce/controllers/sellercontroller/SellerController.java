@@ -1,8 +1,8 @@
 package com.DemoProjectECommerce.ECommerce.controllers.sellercontroller;
 
+import com.DemoProjectECommerce.ECommerce.entity.Seller;
 import com.DemoProjectECommerce.ECommerce.model.customerdto.AddressUpdateDto;
 import com.DemoProjectECommerce.ECommerce.services.sellerservice.SellerService;
-import com.DemoProjectECommerce.ECommerce.entity.entitybasic.Seller;
 import com.DemoProjectECommerce.ECommerce.model.userdto.UserProfileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,8 @@ public class SellerController {
     @Autowired
     private SellerService sellerService;
     @GetMapping("/get-profile")
-    public ResponseEntity<Seller> SellerInfo() {
+    public ResponseEntity<Seller> SellerInfo()
+    {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ResponseEntity.ok(sellerService.getSellerProfile(authentication.getName()));
     }

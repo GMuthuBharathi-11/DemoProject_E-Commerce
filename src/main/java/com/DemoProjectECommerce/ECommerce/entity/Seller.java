@@ -1,31 +1,30 @@
-package com.DemoProjectECommerce.ECommerce.entity.entitybasic;
+package com.DemoProjectECommerce.ECommerce.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
+@NoArgsConstructor
 @SuperBuilder
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
 @Entity
 @Table(name="seller")
 public class Seller
 {
     //Setting Parameters for Seller
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long   id;             // foreign key for (Seller_Table)
+    private Long   Id;
     private String gstNo;
     private String companyContact;
     private String companyName;
+
     @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = " User_Id", referencedColumnName = "Id")
-    private User   user;
+    private User user;
 }

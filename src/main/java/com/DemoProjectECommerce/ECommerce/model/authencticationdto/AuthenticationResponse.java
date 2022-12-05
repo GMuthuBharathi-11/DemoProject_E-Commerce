@@ -1,11 +1,12 @@
 package com.DemoProjectECommerce.ECommerce.model.authencticationdto;
 
+import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import java.time.Instant;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
