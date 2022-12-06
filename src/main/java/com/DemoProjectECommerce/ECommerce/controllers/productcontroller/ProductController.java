@@ -1,5 +1,9 @@
 //package com.DemoProjectECommerce.ECommerce.controllers.productcontroller;
 //
+//import com.DemoProjectECommerce.ECommerce.model.productdto.ProductDto;
+//import com.DemoProjectECommerce.ECommerce.model.productdto.ProductViewCustomerDto;
+//import com.DemoProjectECommerce.ECommerce.model.productdto.ProductViewDto;
+//import com.DemoProjectECommerce.ECommerce.services.productservice.ProductService;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,8 @@
 //import org.springframework.security.core.Authentication;
 //import org.springframework.web.bind.annotation.*;
 //
+//import java.util.List;
+//
 //@RestController
 //@RequestMapping("/product")
 //public class ProductController
@@ -21,10 +27,10 @@
 //    Logger logger = LoggerFactory.getLogger(ProductController.class);
 //    @PostMapping("/add")
 //    @PreAuthorize("hasRole('ROLE_SELLER')")
-//    public ResponseEntity<String> addProduct(Authentication authentication, @RequestBody ProductDTO productDTO) throws InterruptedException {
+//    public ResponseEntity<String> addProduct(Authentication authentication, @RequestBody ProductDto productDto) throws InterruptedException {
 //        logger.info("ProductController :: Adding product");
 //        String username = authentication.getName();
-//        productService.addProduct(username,productDTO);
+//        productService.addProduct(username,productDto);
 //        return new ResponseEntity<>("Product is added successfully", HttpStatus.ACCEPTED);
 //    }
 //    @GetMapping("/view/{id}")
@@ -36,35 +42,35 @@
 //    }
 //    @GetMapping("/viewCustomer/{id}")
 //    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-//    public ResponseEntity<ProductViewCustomerDTO> viewProductCustomer(@PathVariable("id") Integer id){
+//    public ResponseEntity<ProductViewCustomerDto> viewProductCustomer(@PathVariable("id") Integer id){
 //
-//        ProductViewCustomerDTO productDTO=productService.viewProductForCustomer(id);
+//        ProductViewCustomerDto productDTO=productService.viewProductForCustomer(id);
 //        return new ResponseEntity<>(productDTO, HttpStatus.OK);
 //    }
 //    @GetMapping("/viewAdmin/{id}")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    public ResponseEntity<ProductViewCustomerDTO> viewProductAdmin(@PathVariable("id") Integer id){
+//    public ResponseEntity<ProductViewCustomerDto> viewProductAdmin(@PathVariable("id") Integer id){
 //
-//        ProductViewCustomerDTO productDTO=productService.viewProductForAdmin(id);
-//        return new ResponseEntity<>(productDTO, HttpStatus.OK);
+//        ProductViewCustomerDto productViewCustomerDto=productService.viewProductForAdmin(id);
+//        return new ResponseEntity<>(productViewCustomerDto, HttpStatus.OK);
 //    }
 //    @GetMapping("/viewAll")
 //    @PreAuthorize("hasRole('ROLE_SELLER')")
-//    public ResponseEntity<List<ProductViewDTO>> viewAllProducts(Authentication authentication,
+//    public ResponseEntity<List<ProductViewDto>> viewAllProducts(Authentication authentication,
 //                                                                @RequestParam(defaultValue = "0") Integer pageNo,
 //                                                                @RequestParam(defaultValue = "10") Integer pageSize,
 //                                                                @RequestParam(defaultValue = "id") String sortBy
 //
 //                                                               ){
 //        Pageable pageRequest = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-//        String   username    = authentication.getName();
-//        List<ProductViewDTO> fieldList = productService.viewProductList(username,pageRequest);
+//        String               username  = authentication.getName();
+//        List<ProductDto>fieldList = productService.viewProductList(username, pageRequest);
 //        return new ResponseEntity<>(fieldList,HttpStatus.OK);
 //    }
 //
 //    @GetMapping("/customer-viewAll/{id}")
 //    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-//    public ResponseEntity<List<ProductViewCustomerDTO>> viewAllProductsForCustomer(@PathVariable Integer id,
+//    public ResponseEntity<List<ProductViewCustomerDto>> viewAllProductsForCustomer(@PathVariable Integer id,
 //                                                                                   @RequestParam(defaultValue = "0") Integer pageNo,
 //                                                                                   @RequestParam(defaultValue = "10") Integer pageSize,
 //                                                                                   @RequestParam(defaultValue = "id") String sortBy
@@ -72,12 +78,12 @@
 //                                                                                  ){
 //        Pageable pageRequest= PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
 //
-//        List<ProductViewCustomerDTO> fieldList = productService.viewProductListForCustomer(id,pageRequest);
+//        List<ProductViewCustomerDto> fieldList = productService.viewProductListForCustomer(id,pageRequest);
 //        return new ResponseEntity<>(fieldList,HttpStatus.OK);
 //    }
 //    @GetMapping("/customer-viewSimilar/{id}")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    public ResponseEntity<List<ProductViewCustomerDTO>> viewSimilarProductsForCustomer(@PathVariable Integer id,
+//    public ResponseEntity<List<ProductViewCustomerDto>> viewSimilarProductsForCustomer(@PathVariable Integer id,
 //                                                                                       @RequestParam(defaultValue = "0") Integer pageNo,
 //                                                                                       @RequestParam(defaultValue = "10") Integer pageSize,
 //                                                                                       @RequestParam(defaultValue = "id") String sortBy
@@ -85,19 +91,19 @@
 //                                                                                      ){
 //        Pageable pageRequest= PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 //
-//        List<ProductViewCustomerDTO> fieldList = productService.viewSimilarProductListForCustomer(id,pageRequest);
+//        List<ProductViewCustomerDto> fieldList = productService.viewSimilarProductListForCustomer(id,pageRequest);
 //        return new ResponseEntity<>(fieldList,HttpStatus.OK);
 //    }
 //    @GetMapping("/admin-viewAll")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    public ResponseEntity<List<ProductViewCustomerDTO>> viewAllProductsForAdmin(
+//    public ResponseEntity<List<ProductViewCustomerDto>> viewAllProductsForAdmin(
 //            @RequestParam(defaultValue = "0") Integer pageNo,
 //            @RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy
 //
 //                                                                               ){
 //        Pageable pageRequest= PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
 //
-//        List<ProductViewCustomerDTO> fieldList = productService.viewProductListForAdmin(pageRequest);
+//        List<ProductViewCustomerDto> fieldList = productService.viewProductListForAdmin(pageRequest);
 //        return new ResponseEntity<>(fieldList,HttpStatus.OK);
 //    }
 //    @PatchMapping("/activate/{id}")
@@ -117,9 +123,9 @@
 //    }
 //    @PutMapping("/update/{id}")
 //    @PreAuthorize("hasRole('ROLE_SELLER')")
-//    public ResponseEntity<String> updateProduct(Authentication authentication,@RequestBody ProductDTO productDTO,@PathVariable("id") Integer id){
+//    public ResponseEntity<String> updateProduct(Authentication authentication,@RequestBody ProductDto productDto,@PathVariable("id") Integer id){
 //        String username = authentication.getName();
-//        productService.updateProduct(username,productDTO,id);
+//        productService.updateProduct(username,ProductDto(),id);
 //        return new ResponseEntity<>("Product Updated", HttpStatus.ACCEPTED);
 //    }
 //
